@@ -423,7 +423,6 @@ const ProjectsPage = ({ onNavigate }) => {
             }
         },
         // Adicionar novos projetos
-        }
     ];
 
     const categories = ["Todos", "Social Media", "Identidade Visual", "Consultoria de Marketing", "Consultoria de Processos", "Gráfica"];
@@ -918,4 +917,5 @@ const QuoteIcon = () => (
 
 
 export default App;
+
 
