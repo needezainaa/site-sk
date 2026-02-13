@@ -857,8 +857,8 @@ const Contact = () => {
                             <h3 className="font-display font-bold text-3xl mb-4">Vamos desbloquear o próximo nível?</h3>
                             <p className="text-purple-200 mb-8 leading-relaxed">Preencha o formulário e nossa equipe entrará em contato mais rápido que um processador de última geração.</p>
                             <div className="space-y-4">
-                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#ffd600] transition-colors cursor-pointer group"><div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#ffd600] group-hover:text-[#4a148c] transition-colors"><MessageCircle size={18} /></div>skmarketing@gmail.com</div>
-                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#ffd600] transition-colors cursor-pointer group"><div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#ffd600] group-hover:text-[#4a148c] transition-colors"><Layout size={18} /></div>www.skcomunic.com.br</div>
+                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#ffd600] transition-colors cursor-pointer group"><div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#ffd600] group-hover:text-[#4a148c] transition-colors"><MessageCircle size={18} /></div>skmarketingecomunicacao@gmail.com</div>
+                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#ffd600] transition-colors cursor-pointer group"><div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#ffd600] group-hover:text-[#4a148c] transition-colors"><Instagram size={18} /></div>skcomunique</div>
                             </div>
                         </div>
                         <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#ff0080] rounded-full opacity-50 blur-3xl"></div>
@@ -917,5 +917,6 @@ const QuoteIcon = () => (
 
 
 export default App;
+
 
 
