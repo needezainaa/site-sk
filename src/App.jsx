@@ -215,7 +215,7 @@ const BriefingModal = ({ onClose }) => {
             message += `\n❓ *${q}*\n👉 ${formData[answerKey] || 'Sem resposta'}\n`;
         });
 
-        return `https://wa.me/5511999999999?text=${encodeURIComponent(message)}`;
+        return `https://wa.me/5511945438152?text=${encodeURIComponent(message)}`;
     };
 
     return (
@@ -726,7 +726,7 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
                 <div className="flex items-center gap-2 cursor-pointer group" onClick={() => onNavigate('home', 'home')}>
                     {/* LOGO NA NAVBAR */}
                     <img 
-                        src="https://placehold.co/150x50?text=LOGO+SK" 
+                        src="https://i.imgur.com/i3aRzWc.png" 
                         alt="SK Marketing" 
                         className="h-12 object-contain" 
                     />
@@ -908,7 +908,7 @@ const Vibe = () => {
                             {/* LOGO NO QUADRADINHO */}
                             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-[#ffd600] overflow-hidden">
                                 <img 
-                                    src="https://placehold.co/100x100?text=SK" 
+                                    src="https://i.imgur.com/WgyUGkb.png" 
                                     alt="SK Logo" 
                                     className="w-full h-full object-cover" 
                                 />
@@ -970,7 +970,7 @@ const Footer = () => {
                 <div className="flex justify-center items-center gap-3 mb-4">
                      {/* LOGO NO RODAPÉ */}
                      <img 
-                        src="https://placehold.co/150x50?text=LOGO+SK" 
+                        src="https://i.imgur.com/i3aRzWc.png" 
                         alt="SK Marketing" 
                         className="h-14 object-contain" 
                     />
@@ -997,5 +997,6 @@ const QuoteIcon = () => (
         <path d="M10 11H6C5.46957 11 4.96086 10.7893 4.58579 10.4142C4.21071 10.0391 4 9.53043 4 9V7C4 6.46957 4.21071 5.96086 4.58579 5.58579C4.96086 5.21071 5.46957 5 6 5H8C8.53043 5 9.03914 5.21071 9.41421 5.58579C9.78929 5.96086 10 6.46957 10 7V11ZM10 11V13C10 14.8565 9.2625 16.637 7.94975 17.9497C6.637 19.2625 4.85652 20 3 20M20 11H16C15.4696 11 14.9609 10.7893 14.5858 10.4142C14.2107 10.0391 14 9.53043 14 9V7C14 6.46957 14.2107 5.96086 14.5858 5.58579C14.9609 5.21071 15.4696 5 16 5H18C18.5304 5 19.0391 5.21071 19.4142 5.58579C19.7893 5.96086 20 6.46957 20 7V11ZM20 11V13C20 14.8565 19.2625 16.637 17.9497 17.9497C16.637 19.2625 14.8565 20 13 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
+
 
 export default App;
