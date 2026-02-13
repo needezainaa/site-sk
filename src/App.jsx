@@ -57,10 +57,10 @@ const App = () => {
         :root {
             --sk-purple: #4a148c;
             --sk-yellow: #ffd600;
-            --sk-pink: #ff0080;
-            --sk-green: #00e676;
+            --sk-pink: #da00f9;
+            --sk-green: #8dff4f;
             --sk-dark: #1a1a1a;
-            --sk-light: #f8fafc;
+            --sk-light: #F5f5f6;
         }
 
         body {
@@ -229,8 +229,8 @@ const BriefingModal = ({ onClose }) => {
 
                 {step === 1 ? (
                     <div className="flex flex-col md:flex-row min-h-[600px]">
-                        {/* Sidebar Decorativa (ROSA CHOQUE - Alterado conforme pedido) */}
-                        <div className="hidden md:flex w-1/3 bg-[#ff0080] p-8 flex-col justify-between text-white relative overflow-hidden">
+                        {/* Sidebar Decorativa ROSA */}
+                        <div className="hidden md:flex w-1/3 bg-[#da00f9] p-8 flex-col justify-between text-white relative overflow-hidden">
                             <div className="relative z-10">
                                 <div className="w-10 h-10 bg-[#ffd600] rounded-lg flex items-center justify-center text-[#ff0080] font-bold mb-6 border-2 border-[#1a1a1a]">SK</div>
                                 <h3 className="font-display font-bold text-3xl mb-4 leading-tight">Bora tirar esse projeto do papel?</h3>
@@ -354,7 +354,7 @@ const BriefingModal = ({ onClose }) => {
 
                                 <button 
                                     type="submit" 
-                                    className="w-full bg-[#00e676] text-[#1a1a1a] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#00c965] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 shadow-[0_4px_0px_#1a1a1a] active:translate-y-0 active:shadow-none border-2 border-[#1a1a1a]"
+                                    className="w-full bg-[#8dff4f] text-[#1a1a1a] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#00c965] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 shadow-[0_4px_0px_#1a1a1a] active:translate-y-0 active:shadow-none border-2 border-[#1a1a1a]"
                                 >
                                     Enviar Briefing <Send size={20} />
                                 </button>
@@ -402,105 +402,27 @@ const ProjectsPage = ({ onNavigate }) => {
     const projects = [
         {
             id: 1,
-            title: "TechBurger Delivery",
+            title: "Ruth Vieira",
             category: "Social Media",
             images: [
-                "https://images.unsplash.com/photo-1561758033-d8f19662cb23?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&q=80&w=800"
+                "https://i.imgur.com/xOwfKFJ.png",
+                "https://i.imgur.com/kT3qIxK.png",
+                "https://i.imgur.com/OPyA2tR.png",
+                "https://i.imgur.com/b7aeSQc.png",
+                "https://i.imgur.com/Mai8oI6.png",
+                "https://i.imgur.com/4kUNEod.png",
+                "https://i.imgur.com/q2v8aaI.png",
+                "https://i.imgur.com/2lomXpT.mp4"
             ],
-            desc: "Gestão completa de Instagram e TikTok, aumentando o engajamento em 300%.",
+            desc: "Gestão completa de Instagram, Facebook e WhatsApp. Veja algumas fotos desse projeto!",
             tags: ["Instagram", "Reels", "Copywriting"],
             details: {
-                challenge: "A hamburgueria tinha ótimos produtos, mas um feed genérico que não despertava desejo. O delivery estava estagnado.",
-                solution: "Criamos uma identidade visual 'dark food', focada em vídeos de 'food porn'. Implementamos um calendário baseado nos horários de pico.",
-                results: ["Crescimento de 300% no engajamento", "Aumento de 40% nos pedidos via DM/Link", "Viralização de 2 Reels locais"]
+                challenge: "A Ruth nos procurou porque não via resultado nas suas redes. Poucos comentários, poucos seguidores... Para uma pré-candidata ela precisava de mais visibilidade.",
+                solution: "Criamos uma nova identidade visual, implementamos um calendário baseado nos horários de pico, e colocamos o engajamento - que antes tava em -13% - em mais de 30% durante o período de campanha e mais de 2000 seguidores em menos de 60 dias de maneira orgânica.",
+                results: ["Crescimento de +40% no engajamento", "Aumento de Seguidores", "Viralização de 4 Reels locais"]
             }
         },
-        {
-            id: 2,
-            title: "Advocacia Nexus",
-            category: "Identidade Visual",
-            images: [
-                "https://images.unsplash.com/photo-1626785774573-4b799314346d?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800"
-            ],
-            desc: "Rebranding completo para escritório de advocacia digital.",
-            tags: ["Logo", "Papelaria", "Manual de Marca"],
-            details: {
-                challenge: "O escritório queria modernizar sua imagem para atrair startups, mas o logo antigo passava uma imagem muito tradicional.",
-                solution: "Desenvolvemos uma identidade minimalista, usando tipografia sem serifa e uma paleta de cores sóbria mas moderna.",
-                results: ["Percepção de valor elevada", "Feedback positivo de clientes tech", "Padronização total dos documentos"]
-            }
-        },
-        {
-            id: 3,
-            title: "Clínica Ágil",
-            category: "Consultoria de Processos",
-            images: [
-                "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800"
-            ],
-            desc: "Otimização do fluxo de atendimento e implementação de CRM.",
-            tags: ["Consultoria", "CRM", "Fluxogramas"],
-            details: {
-                challenge: "A clínica perdia muitos pacientes no agendamento via WhatsApp por demora na resposta e desorganização.",
-                solution: "Mapeamos a jornada do paciente, implementamos um CRM simples e treinamos a equipe de recepção.",
-                results: ["Redução de 80% no tempo de resposta", "Aumento de 25% na taxa de comparecimento", "Equipe menos sobrecarregada"]
-            }
-        },
-        {
-            id: 4,
-            title: "Evento Gamer XP",
-            category: "Gráfica",
-            images: [
-                "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&q=80&w=800"
-            ],
-            desc: "Impressão de banners, credenciais e adesivos para evento geek.",
-            tags: ["Print", "Banners", "Stickers"],
-            details: {
-                challenge: "O evento precisava de materiais impressos de alta qualidade em um prazo curtíssimo (48h) para a inauguração.",
-                solution: "Produção expressa de crachás em PVC, banners em lona fosca e adesivos holográficos.",
-                results: ["Entrega pontual", "Acabamento premium elogiado pelos organizadores", "Durabilidade do material pós-evento"]
-            }
-        },
-        {
-            id: 5,
-            title: "FitLife App",
-            category: "Social Media",
-            images: [
-                "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?auto=format&fit=crop&q=80&w=800"
-            ],
-            desc: "Campanhas de tráfego pago para lançamento de app fitness.",
-            tags: ["Ads", "Meta", "Google"],
-            details: {
-                challenge: "Lançar um novo app fitness em um mercado saturado com baixo orçamento inicial.",
-                solution: "Focamos em micro-influenciadores locais e anúncios geolocalizados. Criativos focados em 'dor e solução' rápida.",
-                results: ["Custo por Instalação (CPI) 30% abaixo da média", "1.500 downloads na primeira semana", "Retorno sobre Investimento (ROAS) de 4x"]
-            }
-        },
-        {
-            id: 6,
-            title: "StartUp Flow",
-            category: "Consultoria de Marketing",
-            images: [
-                "https://images.unsplash.com/photo-1553877606-3c66237c1330?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800",
-                "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&q=80&w=800"
-            ],
-            desc: "Estruturação do setor de marketing interno da startup.",
-            tags: ["Gestão", "Treinamento", "Agile"],
-            details: {
-                challenge: "A startup cresceu rápido e o marketing virou um caos: sem processos, sem prazos e sem métricas.",
-                solution: "Implementamos metodologia ágil (Kanban), definimos rituais de planejamento semanal e criamos dashboards.",
-                results: ["Organização total das demandas", "Clareza nas prioridades", "Time de marketing 100% alinhado com vendas"]
-            }
+        // Adicionar novos projetos
         }
     ];
 
@@ -527,7 +449,7 @@ const ProjectsPage = ({ onNavigate }) => {
                         NOSSOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4a148c] to-[#ff0080]">PROJETOS</span>
                     </h2>
                     <p className="text-gray-600 max-w-2xl text-lg">
-                        Confira como aplicamos nossa metodologia geek em marcas reais. Resultados que falam por si só.
+                        Confira como aplicamos nossa metodologia em projetos reais. Resultados que falam por si só.
                     </p>
                 </div>
 
@@ -789,7 +711,7 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e676] opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-3 w-3 bg-[#00e676]"></span>
                         </span>
-                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Marketing Híbrido & Design</span>
+                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Soluções de Comunicação</span>
                     </div>
                     
                     <h1 className="font-display font-black text-5xl md:text-7xl text-[#1a1a1a] leading-[1.05]">
@@ -804,7 +726,7 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                     </h1>
                     
                     <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#ff0080] pl-6">
-                        Da estratégia geek à impressão gráfica. Transformamos sua empresa em uma referência visual e estratégica.
+                        Comunique o que quiser! Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!
                     </p>
                     
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -851,13 +773,9 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                     <div className="absolute top-[20%] right-[15%] glass-card p-3 rounded-xl border border-[#ff0080]/30 shadow-lg animate-float-delay z-30">
                         <Megaphone size={24} className="text-[#ff0080]" />
                     </div>
-                    
-                    {/* Impressora movida mais para o centro e com porcentagem */}
                     <div className="absolute bottom-[30%] left-[20%] glass-card p-3 rounded-xl border border-[#00e676]/30 shadow-lg animate-float z-30" style={{animationDelay: '1.5s'}}>
                         <Printer size={24} className="text-[#00e676]" />
                     </div>
-
-                    {/* Hashtag removida conforme pedido */}
                 </div>
             </div>
         </section>
@@ -869,7 +787,7 @@ const Services = () => {
     // ... Mesmo código
     const services = [
         { icon: <Target size={32} />, title: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#ff0080]", bgClass: "bg-[#ff0080]/5", borderClass: "border-[#ff0080]/20", hoverColor: "hover:border-[#ff0080]" },
-        { icon: <Cpu size={32} />, title: "Consultoria de Processos", desc: "Organização geek. Sua empresa rodando liso, sem bugs internos.", color: "text-[#00e676]", bgClass: "bg-[#00e676]/5", borderClass: "border-[#00e676]/20", hoverColor: "hover:border-[#00e676]" },
+        { icon: <Cpu size={32} />, title: "Consultoria de Processos", desc: "Organização tão estruturada quanto uma torre de desafios. Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#00e676]", bgClass: "bg-[#00e676]/5", borderClass: "border-[#00e676]/20", hoverColor: "hover:border-[#00e676]" },
         { icon: <MessageCircle size={32} />, title: "Social Media", desc: "Conteúdo que engaja. Transformamos seguidores em fãs leais.", color: "text-[#4a148c]", bgClass: "bg-[#4a148c]/5", borderClass: "border-[#4a148c]/20", hoverColor: "hover:border-[#4a148c]" },
         { icon: <Monitor size={32} />, title: "Web Design", desc: "Sites rápidos e landing pages que convertem visitantes em clientes.", color: "text-[#dcb000]", bgClass: "bg-[#ffd600]/10", borderClass: "border-[#ffd600]/30", hoverColor: "hover:border-[#ffd600]" },
         { icon: <Printer size={32} />, title: "Gráfica & Print", desc: "Cartões e banners. A qualidade da sua marca no mundo físico.", color: "text-[#ff0080]", bgClass: "bg-[#ff0080]/5", borderClass: "border-[#ff0080]/20", hoverColor: "hover:border-[#ff0080]" },
@@ -915,7 +833,7 @@ const Vibe = () => {
                             </div>
                             <div>
                                 <div className="font-bold text-white text-sm">Time SK</div>
-                                <div className="text-xs text-gray-400">Desde 2026</div>
+                                <div className="text-xs text-gray-400">Desde 2022</div>
                             </div>
                         </div>
                     </div>
@@ -976,14 +894,14 @@ const Footer = () => {
                     />
                 </div>
                 <p className="text-gray-500 text-sm mb-6">
-                    © 2026 SK Soluções de Marketing. Feito para quem não aceita o básico.
+                    © 2026 SK Comunique!. Feito para quem não aceita o básico.
                 </p>
                 <div className="flex justify-center gap-4 text-gray-400">
-                    <a href="#" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#1a1a1a] group" title="Siga no Instagram">
+                    <a href="https://www.instagram.com/skcomunique/" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#1a1a1a] group" title="Siga no Instagram">
                         <Instagram size={18} />
                     </a>
                     
-                    <a href="#" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#0077b5] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#1a1a1a]" title="Conecte-se no LinkedIn">
+                    <a href="https://www.linkedin.com/company/sk-comunique/" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#0077b5] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#1a1a1a]" title="Conecte-se no LinkedIn">
                         <Linkedin size={18} />
                     </a>
                 </div>
@@ -1000,3 +918,4 @@ const QuoteIcon = () => (
 
 
 export default App;
+
