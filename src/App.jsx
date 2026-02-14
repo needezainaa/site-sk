@@ -818,7 +818,7 @@ const Vibe = () => {
                 <div className="relative">
                     <div className="bg-[#262626] border border-gray-700 p-8 rounded-2xl relative transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-[0_0_30px_rgba(74,20,140,0.3)]">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#ff0080] via-[#ffd600] to-[#00e676]"></div>
-                        <div className="flex justify-between items-start mb-6"><Quote /><div className="flex gap-1"><div className="w-3 h-3 rounded-full bg-red-500"></div><div className="w-3 h-3 rounded-full bg-yellow-500"></div><div className="w-3 h-3 rounded-full bg-green-500"></div></div></div>
+                        <div className="flex justify-between items-start mb-6"><QuoteIcon /><div className="flex gap-1"><div className="w-3 h-3 rounded-full bg-red-500"></div><div className="w-3 h-3 rounded-full bg-yellow-500"></div><div className="w-3 h-3 rounded-full bg-green-500"></div></div></div>
                         <p className="text-white text-xl font-medium mb-6 leading-relaxed">"Em um mundo de templates prontos, nós escolhemos customizar. Sua marca não é apenas mais uma na fila de renderização. Ela é o <span className="text-[#ffd600]">Main Character</span>."</p>
                         
                         <div className="flex items-center gap-4 border-t border-gray-700 pt-4">
@@ -917,6 +917,7 @@ const QuoteIcon = () => (
 
 
 export default App;
+
 
 
 
