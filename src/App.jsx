@@ -786,7 +786,7 @@ const Services = () => {
     // ... Mesmo código
     const services = [
         { icon: <Target size={32} />, title: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#ff0080]", bgClass: "bg-[#ff0080]/5", borderClass: "border-[#ff0080]/20", hoverColor: "hover:border-[#ff0080]" },
-        { icon: <Cpu size={32} />, title: "Consultoria de Processos", desc: "Organização tão estruturada quanto uma torre de desafios. Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#00e676]", bgClass: "bg-[#00e676]/5", borderClass: "border-[#00e676]/20", hoverColor: "hover:border-[#00e676]" },
+        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações & Processos", desc: "Organização tão estruturada quanto uma torre de desafios. Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#00e676]", bgClass: "bg-[#00e676]/5", borderClass: "border-[#00e676]/20", hoverColor: "hover:border-[#00e676]" },
         { icon: <MessageCircle size={32} />, title: "Social Media", desc: "Conteúdo que engaja. Transformamos seguidores em fãs leais.", color: "text-[#4a148c]", bgClass: "bg-[#4a148c]/5", borderClass: "border-[#4a148c]/20", hoverColor: "hover:border-[#4a148c]" },
         { icon: <Monitor size={32} />, title: "Web Design", desc: "Sites rápidos e landing pages que convertem visitantes em clientes.", color: "text-[#dcb000]", bgClass: "bg-[#ffd600]/10", borderClass: "border-[#ffd600]/30", hoverColor: "hover:border-[#ffd600]" },
         { icon: <Printer size={32} />, title: "Gráfica & Print", desc: "Cartões e banners. A qualidade da sua marca no mundo físico.", color: "text-[#ff0080]", bgClass: "bg-[#ff0080]/5", borderClass: "border-[#ff0080]/20", hoverColor: "hover:border-[#ff0080]" },
@@ -917,6 +917,7 @@ const QuoteIcon = () => (
 
 
 export default App;
+
 
 
 
