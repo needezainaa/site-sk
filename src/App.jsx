@@ -29,12 +29,14 @@ import {
     Send,
     DollarSign,
     Calendar,
-    Monitor
+    Monitor,
+    Quote
 } from 'lucide-react';
 
 const App = () => {
     const [currentView, setCurrentView] = useState('home');
     const [isBriefingOpen, setIsBriefingOpen] = useState(false);
+    const [selectedService, setSelectedService] = useState('Social Media');
 
     const handleNavigate = (view, sectionId = null) => {
         setCurrentView(view);
@@ -48,24 +50,26 @@ const App = () => {
         }
     };
 
-    const toggleBriefing = () => setIsBriefingOpen(!isBriefingOpen);
+    // Nova lógica para lidar com qual serviço foi clicado
+    const handleOpenBriefing = (service = 'Social Media') => {
+        setSelectedService(service);
+        setIsBriefingOpen(true);
+    };
+
+    const handleCloseBriefing = () => {
+        setIsBriefingOpen(false);
+    };
 
     // Estilos Globais
     const globalStyles = `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Space+Grotesk:wght@400;500;700&display=swap');
         
         :root {
-            /* Roxo RGB: 74, 20, 140 -> #4A148C */
             --sk-purple: #4A148C;
-            /* Amarelo RGB: 255, 214, 0 -> #FFD600 */
             --sk-yellow: #FFD600;
-            /* Rosa RGB: 218, 0, 249 -> #DA00F9 */
             --sk-pink: #DA00F9;
-            /* Verde RGB: 141, 255, 79 -> #8DFF4F */
             --sk-green: #8DFF4F;
-            /* Preto RGB: 0, 0, 0 -> #000000 */
             --sk-dark: #000000;
-            /* Branca RGB: 245, 245, 246 -> #F5F5F6 */
             --sk-light: #F5F5F6;
         }
 
@@ -128,14 +132,14 @@ const App = () => {
         <div className="font-sans text-gray-900 antialiased selection:bg-[#DA00F9] selection:text-white min-h-screen flex flex-col">
             <style>{globalStyles}</style>
             
-            <Navbar onNavigate={handleNavigate} currentView={currentView} onOpenBriefing={() => toggleBriefing('Social Media')} />
+            <Navbar onNavigate={handleNavigate} currentView={currentView} onOpenBriefing={handleOpenBriefing} />
             
             <main className="flex-grow">
                 {currentView === 'home' ? (
                     <>
-                        <Hero onNavigate={handleNavigate} onOpenBriefing={() => toggleBriefing('Social Media')} />
-                        {/* Passei a função toggleBriefing para o Services para abrir o modal correto */}
-                        <Services onOpenBriefing={toggleBriefing} />
+                        <Hero onNavigate={handleNavigate} onOpenBriefing={handleOpenBriefing} />
+                        {/* Componentes restaurados: Services e Vibe */}
+                        <Services onOpenBriefing={handleOpenBriefing} />
                         <Vibe />
                         <Contact />
                     </>
@@ -146,13 +150,85 @@ const App = () => {
 
             <Footer />
 
-            {/* Modal de Briefing */}
-            {isBriefingOpen && <BriefingModal onClose={closeBriefing} initialService={selectedServiceForBriefing} />}
+            {/* Modal de Briefing com os dados corretos */}
+            {isBriefingOpen && <BriefingModal onClose={handleCloseBriefing} initialService={selectedService} />}
         </div>
     );
 };
 
-// --- COMPONENTE MODAL DE BRIEFING ---
+// --- COMPONENTES RESTAURADOS ---
+const Services = ({ onOpenBriefing }) => {
+    const services = [
+        { icon: <Target size={32} />, title: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
+        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações", desc: "Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" },
+        { icon: <MessageCircle size={32} />, title: "Social Media", desc: "Conteúdo que engaja. Transformamos seguidores em fãs leais.", color: "text-[#4A148C]", bgClass: "bg-[#4A148C]/5", borderClass: "border-[#4A148C]/20", hoverColor: "hover:border-[#4A148C]" },
+        { icon: <Monitor size={32} />, title: "Web Design", desc: "Sites rápidos e landing pages que convertem visitantes em clientes.", color: "text-[#FFD600]", bgClass: "bg-[#FFD600]/10", borderClass: "border-[#FFD600]/30", hoverColor: "hover:border-[#FFD600]" },
+        { icon: <Printer size={32} />, title: "Gráfica & Print", desc: "Cartões e banners. A qualidade da sua marca no mundo físico.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
+        { icon: <Palette size={32} />, title: "Identidade Visual", desc: "Logotipos e manuais. Criamos a skin lendária do seu negócio.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" }
+    ];
+    return (
+        <section id="servicos" className="py-24 relative">
+            <div className="container mx-auto px-6 relative z-10">
+                <div className="text-center max-w-3xl mx-auto mb-16">
+                    <span className="text-[#DA00F9] font-bold text-sm tracking-wider uppercase mb-2 block">Nosso Arsenal</span>
+                    <h2 className="font-display font-bold text-4xl text-[#000000] mb-6">Ferramentas para <span className="relative inline-block px-2"><span className="absolute inset-0 bg-[#FFD600] -skew-x-6 opacity-30"></span><span className="relative">evoluir</span></span> seu negócio</h2>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {services.map((service, index) => (
+                        <div key={index} onClick={() => onOpenBriefing(service.title)} className={`p-8 ${service.bgClass} rounded-2xl border-2 ${service.borderClass} shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${service.hoverColor} group cursor-pointer relative overflow-hidden`}>
+                            <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-20 ${service.bgClass.replace('/5', '/30').replace('/10', '/40')}`}></div>
+                            <div className={`w-14 h-14 bg-white border border-white/50 rounded-xl flex items-center justify-center mb-6 ${service.color} shadow-sm group-hover:scale-110 transition-transform`}>{service.icon}</div>
+                            <h3 className="font-display font-bold text-xl text-[#000000] mb-3">{service.title}</h3>
+                            <p className="text-gray-700 leading-relaxed text-sm font-medium">{service.desc}</p>
+                            <div className="absolute bottom-6 right-6 opacity-0 transform translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all"><ArrowRight size={20} className={service.color} /></div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const Vibe = () => {
+    return (
+        <section id="vibe" className="py-24 bg-[#000000] relative overflow-hidden text-white">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#4A148C] rounded-full mix-blend-screen filter blur-[120px] opacity-20"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#DA00F9] rounded-full mix-blend-screen filter blur-[100px] opacity-10"></div>
+            <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
+                <div>
+                    <div className="inline-flex items-center gap-2 mb-6"><span className="w-8 h-[2px] bg-[#8DFF4F]"></span><span className="text-[#8DFF4F] font-mono text-sm tracking-widest uppercase">System_Vibe.exe</span></div>
+                    <h2 className="font-display font-black text-4xl md:text-6xl mb-8 leading-tight">NÃO SOMOS <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD600] to-[#DA00F9]">NPCs.</span></h2>
+                    <div className="space-y-6 text-lg text-gray-300 font-light leading-relaxed"><p>A SK nasceu para quebrar o gelo corporativo. Acreditamos que o profissionalismo não precisa ser cinza e monótono.</p><p>Misturamos a paixão pela <strong className="text-white">cultura pop e tecnologia</strong> com a seriedade que o seu negócio exige. Tratamos sua marca como um personagem principal que precisa evoluir de nível.</p></div>
+                    <div className="mt-10 flex flex-wrap gap-3">{['#Modernidade', '#Geek', '#Estilo', '#Criatividade'].map((tag, i) => (<span key={tag} className={`px-4 py-2 border rounded-full text-sm font-bold transition-all cursor-default hover:bg-white hover:text-black hover:border-white ${i % 2 === 0 ? 'border-[#DA00F9] text-[#DA00F9]' : 'border-[#8DFF4F] text-[#8DFF4F]'}`}>{tag}</span>))}</div>
+                </div>
+                <div className="relative">
+                    <div className="bg-[#1A1A1A] border border-gray-700 p-8 rounded-2xl relative transform rotate-2 hover:rotate-0 transition-transform duration-500 shadow-[0_0_30px_rgba(74,20,140,0.3)]">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#DA00F9] via-[#FFD600] to-[#8DFF4F]"></div>
+                        <div className="flex justify-between items-start mb-6">
+                            <Quote size={40} className="text-[#FFD600] fill-current opacity-60 rotate-180" />
+                            <div className="flex gap-1"><div className="w-3 h-3 rounded-full bg-red-500"></div><div className="w-3 h-3 rounded-full bg-yellow-500"></div><div className="w-3 h-3 rounded-full bg-green-500"></div></div>
+                        </div>
+                        <p className="text-white text-xl font-medium mb-6 leading-relaxed">"Em um mundo de templates prontos, nós escolhemos customizar. Sua marca não é apenas mais uma na fila de renderização. Ela é o <span className="text-[#FFD600]">Main Character</span>."</p>
+                        
+                        <div className="flex items-center gap-4 border-t border-gray-700 pt-4">
+                            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-[#FFD600] overflow-hidden text-black font-bold">
+                                SK
+                            </div>
+                            <div>
+                                <div className="font-bold text-white text-sm">Time SK</div>
+                                <div className="text-xs text-gray-400">Desde 2022</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="absolute top-4 left-4 w-full h-full border-2 border-[#4A148C] rounded-2xl -z-10"></div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// --- DEMAIS COMPONENTES ---
+
 const Footer = () => {
     return (
         <footer className="bg-white border-t border-gray-100 py-10 relative overflow-hidden">
@@ -160,7 +236,6 @@ const Footer = () => {
              
             <div className="container mx-auto px-6 text-center relative z-10">
                 <div className="flex justify-center items-center gap-3 mb-4">
-                     {/* LOGO NO RODAPÉ */}
                      <img 
                         src="https://placehold.co/150x50?text=LOGO+SK" 
                         alt="SK Marketing" 
@@ -171,7 +246,6 @@ const Footer = () => {
                     © 2026 SK Soluções de Marketing. Feito para quem não aceita o básico.
                 </p>
                 <div className="flex justify-center gap-4 text-gray-400">
-                    {/* LINKS DO RODAPÉ - SUBSTITUA OS LINKS AQUI */}
                     <a href="https://instagram.com/skmarketingecomunicacao" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#000000] group" title="Siga no Instagram">
                         <Instagram size={18} />
                     </a>
@@ -221,7 +295,6 @@ const Contact = () => {
 
 const BriefingModal = ({ onClose, initialService }) => {
     const [step, setStep] = useState(1);
-    // Inicializa o serviço com o que foi clicado
     const [serviceType, setServiceType] = useState(initialService || 'Social Media');
     const [formData, setFormData] = useState({
         name: '',
@@ -230,12 +303,10 @@ const BriefingModal = ({ onClose, initialService }) => {
         q1: '', q2: '', q3: '', q4: '', q5: ''
     });
 
-    // Atualiza o serviceType se a prop mudar (garantia extra)
     useEffect(() => {
         if (initialService) setServiceType(initialService);
     }, [initialService]);
 
-    // Mapeamento de perguntas por área (5 Perguntas Estratégicas)
     const questionsByService = {
         'Social Media': [
             "Qual o principal objetivo? (Vendas, Seguidores, Branding)",
@@ -289,7 +360,6 @@ const BriefingModal = ({ onClose, initialService }) => {
     };
 
     const getWhatsAppLink = () => {
-        // Constrói a mensagem com as respostas do briefing
         let message = `*NOVO BRIEFING ENVIADO PELO SITE*\n\n`;
         message += `👤 *Nome:* ${formData.name}\n`;
         message += `🏢 *Empresa:* ${formData.company}\n`;
@@ -316,7 +386,6 @@ const BriefingModal = ({ onClose, initialService }) => {
 
                 {step === 1 ? (
                     <div className="flex flex-col md:flex-row min-h-[600px]">
-                        {/* Sidebar Decorativa (ROSA DA MARCA) */}
                         <div className="hidden md:flex w-1/3 bg-[#DA00F9] p-8 flex-col justify-between text-white relative overflow-hidden">
                             <div className="relative z-10">
                                 <div className="w-10 h-10 bg-[#FFD600] rounded-lg flex items-center justify-center text-[#DA00F9] font-bold mb-6 border-2 border-[#000000]">SK</div>
@@ -339,7 +408,6 @@ const BriefingModal = ({ onClose, initialService }) => {
                             <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#FFD600] rounded-full blur-3xl opacity-30 -translate-x-1/2 translate-y-1/2"></div>
                         </div>
 
-                        {/* Formulário */}
                         <div className="w-full md:w-2/3 p-8 md:p-10 bg-white">
                             <div className="mb-6 border-b border-gray-100 pb-4">
                                 <h2 className="font-display font-black text-3xl text-[#000000]">Briefing Tático</h2>
@@ -408,7 +476,6 @@ const BriefingModal = ({ onClose, initialService }) => {
                                     })}
                                 </div>
 
-                                {/* Botão VERDE NEON conforme pedido */}
                                 <button type="submit" className="w-full bg-[#8DFF4F] text-[#000000] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#7ce644] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 shadow-[0_4px_0px_#000000] active:translate-y-0 active:shadow-none border-2 border-[#000000]">
                                     Enviar Briefing <Send size={20} />
                                 </button>
@@ -447,9 +514,7 @@ const BriefingModal = ({ onClose, initialService }) => {
     );
 };
 
-// --- NOVA PÁGINA DE PROJETOS ---
 const ProjectsPage = ({ onNavigate }) => {
-    // ... [Mesmo código da versão anterior]
     const [filter, setFilter] = useState('Todos');
     const [selectedProject, setSelectedProject] = useState(null);
 
@@ -465,8 +530,7 @@ const ProjectsPage = ({ onNavigate }) => {
                 "https://i.imgur.com/b7aeSQc.png",
                 "https://i.imgur.com/Mai8oI6.png",
                 "https://i.imgur.com/4kUNEod.png",
-                "https://i.imgur.com/q2v8aaI.png",
-                "https://i.imgur.com/2lomXpT.mp4"
+                "https://i.imgur.com/q2v8aaI.png"
             ],
             desc: "Gestão completa de Instagram, Facebook e WhatsApp. Veja algumas fotos desse projeto!",
             tags: ["Instagram", "Reels", "Copywriting"],
@@ -520,13 +584,11 @@ const ProjectsPage = ({ onNavigate }) => {
                 solution: "Produzir um calendário de conteúdos alinhado com os cursos e produtos vendidos pela GBS e estabelecer ma presença digital em suas redes (interagindo com compartilhameentos, menções, comentários), além disso, produzir artes para comunicações innternas e vendas de produtos físicos (camisetas, bonés, garrafas).",
                 results: ["Aumento de 80% na interatividade e seguidores nas redes", "Melhor conversão de dados e aderência aos cursos", "Melhora de 60% da visibilididade online da marca dentro da cidade"]
             }
-        },
-        // Adicionar novos projetos
+        }
     ];
 
     const categories = ["Todos", "Social Media", "Identidade Visual", "Consultoria de Marketing", "Consultoria de Processos", "Gráfica"];
     
-    // AQUI: Atualizamos a lógica para o filtro buscar dentro da lista de categorias
     const filteredProjects = filter === 'Todos' ? projects : projects.filter(p => p.category.includes(filter));
 
     return (
@@ -538,18 +600,37 @@ const ProjectsPage = ({ onNavigate }) => {
                     <p className="text-gray-600 max-w-2xl text-lg">Confira como aplicamos nossa metodologia geek em marcas reais. Resultados que falam por si só.</p>
                 </div>
                 <div className="flex flex-wrap gap-3 mb-12">{categories.map((cat) => (<button key={cat} onClick={() => setFilter(cat)} className={`px-5 py-2 rounded-full font-bold text-sm transition-all border-2 ${filter === cat ? 'bg-[#4A148C] text-white border-[#4A148C] shadow-[4px_4px_0px_#FFD600]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#4A148C] hover:text-[#4A148C]'}`}>{cat}</button>))}</div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">{filteredProjects.map((project) => (<div key={project.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col h-full"><div className="h-48 overflow-hidden relative cursor-pointer" onClick={() => setSelectedProject(project)}><div className="absolute inset-0 bg-[#4A148C]/20 group-hover:bg-transparent transition-colors z-10"></div><img src={project.images[0]} alt={project.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
-                    
-                    {/* AQUI: Renderiza as múltiplas etiquetas de categoria no card */}
-                    <div className="absolute top-4 right-4 z-20 flex flex-col items-end gap-2">
-                        {project.category.map(cat => (
-                            <div key={cat} className="bg-white/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider text-[#4A148C]">
-                                {cat}
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {filteredProjects.map((project) => (
+                        <div key={project.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+                            <div className="h-56 overflow-hidden relative cursor-pointer bg-gray-900" onClick={() => setSelectedProject(project)}>
+                                <div className="absolute inset-0 bg-[#4A148C]/20 group-hover:bg-transparent transition-colors z-10"></div>
+                                
+                                {/* Imagem preenchendo o espaço (object-cover) */}
+                                <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover relative z-0 transform group-hover:scale-105 transition-transform duration-500" />
+                                
+                                {/* Categorias menores na parte inferior esquerda */}
+                                <div className="absolute bottom-3 left-3 z-30 flex flex-wrap gap-1.5">
+                                    {project.category.map(cat => (
+                                        <div key={cat} className="bg-white/95 backdrop-blur text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-widest text-[#4A148C] shadow-sm">
+                                            {cat}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        ))}
-                    </div>
-                
-                </div><div className="p-6 flex flex-col flex-grow"><h3 className="font-display font-bold text-2xl text-[#000000] mb-2 group-hover:text-[#DA00F9] transition-colors">{project.title}</h3><p className="text-gray-600 text-sm mb-4 leading-relaxed flex-grow">{project.desc}</p><div className="flex flex-wrap gap-2 mb-6">{project.tags.map(tag => (<span key={tag} className="text-[10px] font-bold uppercase tracking-wide bg-gray-50 text-gray-500 px-2 py-1 rounded border border-gray-100">#{tag}</span>))}</div><button onClick={() => setSelectedProject(project)} className="w-full py-3 rounded-lg border-2 border-[#000000] font-bold text-sm flex items-center justify-center gap-2 group-hover:bg-[#000000] group-hover:text-[#FFD600] transition-all">Ver Case Completo <ArrowRight size={16} /></button></div></div>))}</div>
+                            <div className="p-6 flex flex-col flex-grow">
+                                <h3 className="font-display font-bold text-2xl text-[#000000] mb-2 group-hover:text-[#DA00F9] transition-colors">{project.title}</h3>
+                                <p className="text-gray-600 text-sm mb-4 leading-relaxed flex-grow">{project.desc}</p>
+                                <div className="flex flex-wrap gap-2 mb-6">
+                                    {project.tags.map(tag => (
+                                        <span key={tag} className="text-[10px] font-bold uppercase tracking-wide bg-gray-50 text-gray-500 px-2 py-1 rounded border border-gray-100">#{tag}</span>
+                                    ))}
+                                </div>
+                                <button onClick={() => setSelectedProject(project)} className="w-full py-3 rounded-lg border-2 border-[#000000] font-bold text-sm flex items-center justify-center gap-2 group-hover:bg-[#DA00F9] group-hover:border-[#DA00F9] group-hover:text-white transition-all">Ver Case Completo <ArrowRight size={16} /></button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
             {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
         </section>
@@ -588,9 +669,8 @@ const ProjectModal = ({ project, onClose }) => {
                         {project.images.map((img, idx) => (<button key={idx} onClick={() => { setActiveImageIndex(idx); setIsAutoPlaying(false); }} className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImageIndex === idx ? 'border-[#FFD600] scale-105 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}`}><img src={img} alt="thumb" className="w-full h-full object-cover" /></button>))}
                     </div>
                 </div>
+                
                 <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto">
-                    
-                    {/* AQUI: Renderiza as múltiplas etiquetas no modal também */}
                     <div className="hidden md:block mb-6">
                         <div className="flex flex-wrap gap-2 mb-2">
                             {project.category.map(cat => (
@@ -600,21 +680,15 @@ const ProjectModal = ({ project, onClose }) => {
                         <h2 className="font-display font-black text-4xl text-[#000000] mb-2">{project.title}</h2>
                         <div className="flex gap-2">{project.tags.map(tag => (<span key={tag} className="text-xs text-gray-500 font-bold">#{tag}</span>))}</div>
                     </div>
-                    {/* BARRA DE MINIATURAS AJUSTADA PARA JUSTIFY-START */}
-                    <div className="p-4 bg-[#000000] flex gap-2 overflow-x-auto justify-start scrollbar-hide">
-                        {project.images.map((img, idx) => (<button key={idx} onClick={() => { setActiveImageIndex(idx); setIsAutoPlaying(false); }} className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImageIndex === idx ? 'border-[#FFD600] scale-105 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}`}><img src={img} alt="thumb" className="w-full h-full object-cover" /></button>))}
-                    </div>
-                </div>
-                <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto">
-                    <div className="hidden md:block mb-6"><span className="bg-[#FFD600] text-[#000000] px-3 py-1 text-xs font-bold uppercase tracking-widest rounded mb-2 inline-block">{project.category}</span><h2 className="font-display font-black text-4xl text-[#000000] mb-2">{project.title}</h2><div className="flex gap-2">{project.tags.map(tag => (<span key={tag} className="text-xs text-gray-500 font-bold">#{tag}</span>))}</div></div>
+                    
                     <div className="space-y-8">
                         <div><h3 className="flex items-center gap-2 font-bold text-[#DA00F9] mb-2 uppercase tracking-wide text-sm"><Target size={18} /> O Desafio</h3><p className="text-gray-700 leading-relaxed">{project.details?.challenge}</p></div>
                         <div><h3 className="flex items-center gap-2 font-bold text-[#4A148C] mb-2 uppercase tracking-wide text-sm"><Zap size={18} /> A Solução</h3><p className="text-gray-700 leading-relaxed">{project.details?.solution}</p></div>
-                        <div className="bg-[#F5F5F6] p-6 rounded-xl border border-gray-100"><h3 className="flex items-center gap-2 font-bold text-[#8DFF4F] mb-4 uppercase tracking-wide text-sm"><TrendingUp size={18} /> Resultados</h3><ul className="space-y-3">{project.details?.results.map((result, idx) => (<li key={idx} className="flex items-start gap-3 text-gray-700 text-sm"><div className="min-w-[20px] pt-1"><div className="w-5 h-5 rounded-full bg-[#8DFF4F]/20 flex items-center justify-center"><Check size={12} className="text-[#8DFF4F] stroke-[3px]" /></div></div>{result}</li>))}</ul></div>
+                        <div className="bg-[#4A148C] p-6 rounded-xl border border-[#4A148C]/20 shadow-lg"><h3 className="flex items-center gap-2 font-bold text-[#8DFF4F] mb-4 uppercase tracking-wide text-sm"><TrendingUp size={18} /> Resultados</h3><ul className="space-y-3">{project.details?.results.map((result, idx) => (<li key={idx} className="flex items-start gap-3 text-white text-sm"><div className="min-w-[20px] pt-1"><div className="w-5 h-5 rounded-full bg-[#8DFF4F]/20 flex items-center justify-center"><Check size={12} className="text-[#8DFF4F] stroke-[3px]" /></div></div>{result}</li>))}</ul></div>
                     </div>
                     <div className="mt-10 pt-6 border-t border-gray-100 flex justify-between items-center">
                         <p className="text-sm text-gray-400 font-mono">Gostou desse case?</p>
-                        <button className="bg-[#000000] text-white px-6 py-3 rounded-lg font-bold text-sm hover:bg-[#DA00F9] transition-colors flex items-center gap-2">Quero algo assim <Rocket size={16} /></button>
+                        <button className="bg-gradient-to-r from-[#4A148C] to-[#FFD600] text-white px-6 py-3 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity flex items-center gap-2 shadow-lg drop-shadow-md">Quero algo assim <Rocket size={16} /></button>
                     </div>
                 </div>
             </div>
@@ -636,10 +710,9 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                         <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Marketing Híbrido & Design</span>
                     </div>
                     <h1 className="font-display font-black text-5xl md:text-7xl text-[#000000] leading-[1.05]">SUA MARCA <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4A148C] to-[#DA00F9]">MERECE MAIS</span> <br /><span className="relative inline-block z-10">DO QUE O BÁSICO<svg className="absolute w-[110%] h-4 -bottom-2 -left-2 text-[#FFD600] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="8" fill="none" /></svg></span></h1>
-                    {/* Texto Atualizado */}
                     <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6">Comunique o que quiser! Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <button onClick={() => onOpenBriefing('Social Media')} className="bg-[#4A148C] text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 group shadow-[6px_6px_0px_#FFD600] border-2 border-[#4A148C] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">Quero Ser Visto <Rocket size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"/></button>
+                        <button onClick={() => onOpenBriefing('Social Media')} className="bg-[#4A148C] text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 group shadow-[6px_6px_0px_#FFD600] border-2 border-[#4A148C] hover:scale-105 transition-all duration-300">Quero Ser Visto <Rocket size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"/></button>
                         <button onClick={() => onNavigate('projetos')} className="bg-white text-[#000000] border-2 border-[#000000] px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">Ver Projetos <Zap size={20} className="text-[#FFD600] fill-[#FFD600]" /></button>
                     </div>
                 </div>
@@ -687,7 +760,6 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
         <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100 py-3' : 'bg-transparent py-5'}`}>
             <div className="container mx-auto px-6 flex justify-between items-center">
                 <div className="flex items-center gap-2 cursor-pointer group" onClick={() => onNavigate('home', 'home')}>
-                    {/* LOGO NA NAVBAR */}
                     <img 
                         src="https://placehold.co/150x50?text=LOGO+SK" 
                         alt="SK Marketing" 
@@ -737,14 +809,3 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
