@@ -214,7 +214,9 @@ const Vibe = () => {
                                 <img 
                                     src="https://i.imgur.com/WgyUGkb.png" 
                                     alt="SK Logo" 
-                                    className="w-full h-full object-cover" 
+                                    className="w-full h-full object-cover select-none" 
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    draggable="false"
                                 />
                             </div>
                             <div>
@@ -242,7 +244,9 @@ const Footer = () => {
                      <img 
                         src="https://i.imgur.com/i3aRzWc.png" 
                         alt="SK Marketing" 
-                        className="h-14 object-contain" 
+                        className="h-14 object-contain select-none" 
+                        onContextMenu={(e) => e.preventDefault()}
+                        draggable="false"
                     />
                 </div>
                 <p className="text-gray-500 text-sm mb-6">
@@ -609,8 +613,13 @@ const ProjectsPage = ({ onNavigate }) => {
                             <div className="h-56 overflow-hidden relative cursor-pointer bg-gray-900" onClick={() => setSelectedProject(project)}>
                                 <div className="absolute inset-0 bg-[#4A148C]/20 group-hover:bg-transparent transition-colors z-10"></div>
                                 
-                                {/* Imagem preenchendo o espaço (object-cover) */}
-                                <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover relative z-0 transform group-hover:scale-105 transition-transform duration-500" />
+                                <img 
+                                    src={project.images[0]} 
+                                    alt={project.title} 
+                                    className="w-full h-full object-cover relative z-0 transform group-hover:scale-105 transition-transform duration-500 select-none" 
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    draggable="false"
+                                />
                                 
                                 {/* Categorias menores na parte inferior esquerda */}
                                 <div className="absolute bottom-3 left-3 z-30 flex flex-wrap gap-1.5">
@@ -643,14 +652,26 @@ const ProjectsPage = ({ onNavigate }) => {
 const ProjectModal = ({ project, onClose }) => {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
-    useEffect(() => { const handleEsc = (e) => { if (e.key === 'Escape') onClose(); }; window.addEventListener('keydown', handleEsc); return () => window.removeEventListener('keydown', handleEsc); }, [onClose]);
+    useEffect(() => { 
+        const handleEsc = (e) => { 
+            if (e.key === 'Escape') {
+                if (isFullscreen) setIsFullscreen(false);
+                else onClose();
+            }
+        }; 
+        window.addEventListener('keydown', handleEsc); 
+        return () => window.removeEventListener('keydown', handleEsc); 
+    }, [onClose, isFullscreen]);
 
     useEffect(() => {
         let interval;
-        if (isAutoPlaying) { interval = setInterval(() => { setActiveImageIndex((prev) => (prev + 1) % project.images.length); }, 2500); }
+        if (isAutoPlaying && !isFullscreen) { 
+            interval = setInterval(() => { setActiveImageIndex((prev) => (prev + 1) % project.images.length); }, 2500); 
+        }
         return () => clearInterval(interval);
-    }, [isAutoPlaying, project.images.length]);
+    }, [isAutoPlaying, project.images.length, isFullscreen]);
 
     const nextImage = () => { setActiveImageIndex((prev) => (prev + 1) % project.images.length); setIsAutoPlaying(false); };
     const prevImage = () => { setActiveImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length); setIsAutoPlaying(false); };
@@ -660,16 +681,50 @@ const ProjectModal = ({ project, onClose }) => {
             <div className="absolute inset-0 bg-[#000000]/80 backdrop-blur-sm" onClick={onClose}></div>
             <div className="bg-white rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto relative z-10 animate-slide-up shadow-2xl border-4 border-[#000000] flex flex-col md:flex-row">
                 <button onClick={onClose} className="absolute top-4 right-4 z-20 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors border border-gray-200"><X size={24} className="text-[#000000]" /></button>
-                <div className="md:w-1/2 bg-gray-100 relative flex flex-col">
-                    <div className="relative flex-grow h-64 md:h-auto overflow-hidden group">
-                        <img src={project.images[activeImageIndex]} alt={`Slide ${activeImageIndex}`} className="w-full h-full object-cover transition-all duration-500 ease-in-out" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 to-transparent flex flex-col justify-end p-8 md:hidden"><h2 className="text-white font-display font-bold text-3xl">{project.title}</h2></div>
-                        <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 backdrop-blur hover:bg-white flex items-center justify-center text-white hover:text-black opacity-0 group-hover:opacity-100 transition-all"><ChevronLeft size={20} /></button>
-                        <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 backdrop-blur hover:bg-white flex items-center justify-center text-white hover:text-black opacity-0 group-hover:opacity-100 transition-all"><ChevronRight size={20} /></button>
-                        {isAutoPlaying && <div className="absolute bottom-0 left-0 h-1 bg-[#FFD600] animate-progress z-10"></div>}
+                <div className="md:w-1/2 bg-[#000000] relative flex flex-col border-r border-gray-200">
+                    
+                    <div 
+                        className="relative flex-grow h-64 md:h-auto overflow-hidden group cursor-pointer" 
+                        onClick={() => setIsFullscreen(true)}
+                        title="Clique para expandir a imagem"
+                    >
+                        {/* Imagem borrada de fundo preenchendo as laterais */}
+                        <div className="absolute inset-0 z-0 overflow-hidden">
+                            <img src={project.images[activeImageIndex]} alt="bg-blur" className="w-full h-full object-cover blur-2xl opacity-40 transform scale-125" />
+                        </div>
+                        
+                        {/* Imagem real não cortada (object-contain) com bloqueio de menu de contexto */}
+                        <img 
+                            src={project.images[activeImageIndex]} 
+                            alt={`Slide ${activeImageIndex}`} 
+                            className="w-full h-full object-contain relative z-10 transition-all duration-500 ease-in-out select-none" 
+                            onContextMenu={(e) => e.preventDefault()}
+                            draggable="false"
+                        />
+                        
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 to-transparent flex flex-col justify-end p-8 md:hidden z-20"><h2 className="text-white font-display font-bold text-3xl">{project.title}</h2></div>
+                        <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 backdrop-blur hover:bg-white flex items-center justify-center text-white hover:text-black opacity-0 group-hover:opacity-100 transition-all z-20"><ChevronLeft size={20} /></button>
+                        <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 backdrop-blur hover:bg-white flex items-center justify-center text-white hover:text-black opacity-0 group-hover:opacity-100 transition-all z-20"><ChevronRight size={20} /></button>
+                        {isAutoPlaying && <div className="absolute bottom-0 left-0 h-1 bg-[#FFD600] animate-progress z-30"></div>}
+                        
+                        {/* Ícone indicando expansão */}
+                        <div className="absolute top-4 left-4 bg-black/50 backdrop-blur rounded-full p-2 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                            <Sparkles size={16} />
+                        </div>
                     </div>
-                    <div className="p-4 bg-[#000000] flex gap-2 overflow-x-auto justify-start scrollbar-hide">
-                        {project.images.map((img, idx) => (<button key={idx} onClick={() => { setActiveImageIndex(idx); setIsAutoPlaying(false); }} className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImageIndex === idx ? 'border-[#FFD600] scale-105 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}`}><img src={img} alt="thumb" className="w-full h-full object-cover" /></button>))}
+                    
+                    <div className="p-4 bg-[#000000] flex gap-2 overflow-x-auto justify-start scrollbar-hide border-t border-gray-800">
+                        {project.images.map((img, idx) => (
+                            <button key={idx} onClick={() => { setActiveImageIndex(idx); setIsAutoPlaying(false); }} className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${activeImageIndex === idx ? 'border-[#FFD600] scale-105 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'}`}>
+                                <img 
+                                    src={img} 
+                                    alt="thumb" 
+                                    className="w-full h-full object-cover select-none" 
+                                    onContextMenu={(e) => e.preventDefault()}
+                                    draggable="false"
+                                />
+                            </button>
+                        ))}
                     </div>
                 </div>
                 
@@ -695,6 +750,36 @@ const ProjectModal = ({ project, onClose }) => {
                     </div>
                 </div>
             </div>
+
+            {/* LIGHTBOX / FULLSCREEN */}
+            {isFullscreen && (
+                <div className="fixed inset-0 z-[80] bg-black/95 flex items-center justify-center backdrop-blur-md" onClick={() => setIsFullscreen(false)}>
+                    <button onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }} className="absolute top-6 right-6 z-[90] w-12 h-12 flex items-center justify-center text-white hover:text-[#DA00F9] transition-colors bg-white/10 rounded-full hover:bg-white/20">
+                        <X size={28} />
+                    </button>
+                    
+                    <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[90] w-14 h-14 flex items-center justify-center text-white hover:text-[#FFD600] transition-colors bg-white/10 rounded-full hover:bg-white/20">
+                        <ChevronLeft size={36} />
+                    </button>
+                    
+                    <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[90] w-14 h-14 flex items-center justify-center text-white hover:text-[#FFD600] transition-colors bg-white/10 rounded-full hover:bg-white/20">
+                        <ChevronRight size={36} />
+                    </button>
+
+                    <img
+                        src={project.images[activeImageIndex]}
+                        alt={`Fullscreen Slide ${activeImageIndex}`}
+                        className="max-w-[90vw] max-h-[90vh] object-contain select-none cursor-default"
+                        onContextMenu={(e) => e.preventDefault()}
+                        draggable="false"
+                        onClick={(e) => e.stopPropagation()} 
+                    />
+
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 font-bold tracking-widest text-sm bg-black/50 px-5 py-2 rounded-full backdrop-blur-md border border-white/10">
+                        {activeImageIndex + 1} / {project.images.length}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
