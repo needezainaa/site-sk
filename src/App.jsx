@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { 
     Rocket, 
     Printer, 
@@ -50,7 +51,6 @@ const App = () => {
         }
     };
 
-    // Nova lógica para lidar com qual serviço foi clicado
     const handleOpenBriefing = (service = 'Social Media') => {
         setSelectedService(service);
         setIsBriefingOpen(true);
@@ -60,7 +60,6 @@ const App = () => {
         setIsBriefingOpen(false);
     };
 
-    // Estilos Globais
     const globalStyles = `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Space+Grotesk:wght@400;500;700&display=swap');
         
@@ -118,7 +117,6 @@ const App = () => {
         .animate-slide-up { animation: slideUp 0.4s ease-out forwards; }
         .animate-progress { animation: progress 2.5s linear infinite; }
         
-        /* Ocultar barra de rolagem em galerias */
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
@@ -149,13 +147,14 @@ const App = () => {
 
             <Footer />
 
-            {/* Modal de Briefing com os dados corretos */}
             {isBriefingOpen && <BriefingModal onClose={handleCloseBriefing} initialService={selectedService} />}
+            
+            {/* Para ativar o Analytics no GitHub/Vercel, remova as chaves e barras para que fique apenas a tag <Analytics /> */}
+            {/* <Analytics /> */}
         </div>
     );
 };
 
-// --- COMPONENTES RESTAURADOS ---
 const Services = ({ onOpenBriefing }) => {
     const services = [
         { icon: <Target size={32} />, title: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
@@ -231,8 +230,6 @@ const Vibe = () => {
         </section>
     );
 };
-
-// --- DEMAIS COMPONENTES ---
 
 const Footer = () => {
     return (
@@ -346,7 +343,7 @@ const BriefingModal = ({ onClose, initialService }) => {
         'Consultoria de Processos': [
             "Qual o processo mais 'travado' ou lento da empresa hoje?",
             "Quais ferramentas a equipe usa? (WhatsApp, Excel, Trello...)",
-            "Quantas pessoas estão envolvidas na operação diária?",
+            "Quantas pessoas identities na operação diária?",
             "Onde acontecem os maiores erros operacionais atualmente?",
             "O que você gostaria de automatizar primeiro se pudesse?"
         ],
@@ -621,7 +618,6 @@ const ProjectsPage = ({ onNavigate }) => {
                                     draggable="false"
                                 />
                                 
-                                {/* Categorias menores na parte inferior esquerda */}
                                 <div className="absolute bottom-3 left-3 z-30 flex flex-wrap gap-1.5">
                                     {project.category.map(cat => (
                                         <div key={cat} className="bg-white/95 backdrop-blur text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-widest text-[#4A148C] shadow-sm">
@@ -688,12 +684,10 @@ const ProjectModal = ({ project, onClose }) => {
                         onClick={() => setIsFullscreen(true)}
                         title="Clique para expandir a imagem"
                     >
-                        {/* Imagem borrada de fundo preenchendo as laterais */}
                         <div className="absolute inset-0 z-0 overflow-hidden">
                             <img src={project.images[activeImageIndex]} alt="bg-blur" className="w-full h-full object-cover blur-2xl opacity-40 transform scale-125" />
                         </div>
                         
-                        {/* Imagem real não cortada (object-contain) com bloqueio de menu de contexto */}
                         <img 
                             src={project.images[activeImageIndex]} 
                             alt={`Slide ${activeImageIndex}`} 
@@ -707,7 +701,6 @@ const ProjectModal = ({ project, onClose }) => {
                         <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 backdrop-blur hover:bg-white flex items-center justify-center text-white hover:text-black opacity-0 group-hover:opacity-100 transition-all z-20"><ChevronRight size={20} /></button>
                         {isAutoPlaying && <div className="absolute bottom-0 left-0 h-1 bg-[#FFD600] animate-progress z-30"></div>}
                         
-                        {/* Ícone indicando expansão */}
                         <div className="absolute top-4 left-4 bg-black/50 backdrop-blur rounded-full p-2 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity z-20">
                             <Sparkles size={16} />
                         </div>
@@ -751,7 +744,6 @@ const ProjectModal = ({ project, onClose }) => {
                 </div>
             </div>
 
-            {/* LIGHTBOX / FULLSCREEN */}
             {isFullscreen && (
                 <div className="fixed inset-0 z-[80] bg-black/95 flex items-center justify-center backdrop-blur-md" onClick={() => setIsFullscreen(false)}>
                     <button onClick={(e) => { e.stopPropagation(); setIsFullscreen(false); }} className="absolute top-6 right-6 z-[90] w-12 h-12 flex items-center justify-center text-white hover:text-[#DA00F9] transition-colors bg-white/10 rounded-full hover:bg-white/20">
