@@ -422,6 +422,51 @@ const ProjectsPage = ({ onNavigate }) => {
                 results: ["Crescimento de +40% no engajamento", "Aumento de Seguidores", "Viralização de 4 Reels locais"]
             }
         },
+        {
+            id: 2,
+            title: "FD - 2024",
+            category: "Social Media", "Consultoria de Marketing",
+            images: [
+                "https://i.imgur.com/jPjnIVx.png",
+                "https://i.imgur.com/oe1pIQa.jpeg",
+                "https://i.imgur.com/0uHR1h9.png",
+                "https://i.imgur.com/xGom9sM.png",
+                "https://i.imgur.com/GKvMzJe.png",
+                "https://i.imgur.com/XZgTfGS.png",
+                "https://i.imgur.com/caU9eDy.png",
+                "https://i.imgur.com/CV9GW4n.png"
+            ],
+            desc: "Consultoria de Marketing e Posicionamento de Mercado, com gestão de Social Media (Meta) e desenvolvimento de ativos para Sales Enablement.",
+            tags: ["Instagram", "Facebook", "Copywriting", "Marketing", "Sales Enablement"],
+            details: {
+                challenge: "A empresa precisava de uma presença mais destacada nas redes sociais, um melhor marketing interno e arquivos disponíveis para melhoria nas vendas de seus consultores.",
+                solution: "Produzir um calendário de conteúdos alinhado com as necessidades da empresa para a divulgação nas redes sociais; produzir artigos visuais para os consultores da marca; auxiliar nas demandas internas para o grupo de vendas. Assim, garantimos um crescimento de interação tanto nas redes sociais como no resultado dos vendedores.",
+                results: ["Crescimento de +30% no faturamento da empresa", "Aumento de interatividade e seguidores nas redes", "Melhor desempenho dos consultores com materiais de apresentação"]
+                          }
+        },
+        {
+            id: 3,
+            title: "GBS Cursos",
+            category: "Social Media", "Consultoria de Marketing",
+            images: [
+                "https://i.imgur.com/OqjOrgt.png",
+                "https://i.imgur.com/WvBC3di.png",
+                "https://i.imgur.com/YiaXEdi.png",
+                "https://i.imgur.com/oXBUYFn.png",
+                "https://i.imgur.com/4CIL3rq.png",
+                "https://i.imgur.com/Bz3CNpe.png",
+                "https://i.imgur.com/NkvdPs1.png",
+                "https://i.imgur.com/eOjQefa.png",
+                "https://i.imgur.com/zEhkWFf.png"
+            ],
+            desc: "Consultoria de Marketing com gestão de Social Media (Meta) para melhor comunicação e vendas.",
+            tags: ["Instagram", "Facebook", "Copywriting", "Marketing"],
+            details: {
+                challenge: "A GBS é uma empresa que vende cursos preparatórios e estava insatisfeita com os resultados de interações online e a ausência de frequência das publicações.",
+                solution: "Produzir um calendário de conteúdos alinhado com os cursos e produtos vendidos pela GBS e estabelecer ma presença digital em suas redes (interagindo com compartilhameentos, menções, comentários), além disso, produzir artes para comunicações innternas e vendas de produtos físicos (camisetas, bonés, garrafas).",
+                results: ["Aumento de 80% na interatividade e seguidores nas redes", "Melhor conversão de dados e aderência aos cursos", "Melhora de 60% da visibilididade online da marca dentro da cidade"]
+                          }
+        },
         // Adicionar novos projetos
     ];
 
@@ -917,6 +962,7 @@ const QuoteIcon = () => (
 
 
 export default App;
+
 
 
 
