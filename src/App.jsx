@@ -138,7 +138,6 @@ const App = () => {
                 {currentView === 'home' ? (
                     <>
                         <Hero onNavigate={handleNavigate} onOpenBriefing={handleOpenBriefing} />
-                        {/* Componentes restaurados: Services e Vibe */}
                         <Services onOpenBriefing={handleOpenBriefing} />
                         <Vibe />
                         <Contact />
@@ -211,8 +210,12 @@ const Vibe = () => {
                         <p className="text-white text-xl font-medium mb-6 leading-relaxed">"Em um mundo de templates prontos, nós escolhemos customizar. Sua marca não é apenas mais uma na fila de renderização. Ela é o <span className="text-[#FFD600]">Main Character</span>."</p>
                         
                         <div className="flex items-center gap-4 border-t border-gray-700 pt-4">
-                            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-[#FFD600] overflow-hidden text-black font-bold">
-                                SK
+                            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center border border-[#FFD600] overflow-hidden">
+                                <img 
+                                    src="https://i.imgur.com/WgyUGkb.png" 
+                                    alt="SK Logo" 
+                                    className="w-full h-full object-cover" 
+                                />
                             </div>
                             <div>
                                 <div className="font-bold text-white text-sm">Time SK</div>
@@ -237,7 +240,7 @@ const Footer = () => {
             <div className="container mx-auto px-6 text-center relative z-10">
                 <div className="flex justify-center items-center gap-3 mb-4">
                      <img 
-                        src="https://placehold.co/150x50?text=LOGO+SK" 
+                        src="https://i.imgur.com/i3aRzWc.png" 
                         alt="SK Marketing" 
                         className="h-14 object-contain" 
                     />
@@ -761,7 +764,7 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
             <div className="container mx-auto px-6 flex justify-between items-center">
                 <div className="flex items-center gap-2 cursor-pointer group" onClick={() => onNavigate('home', 'home')}>
                     <img 
-                        src="https://placehold.co/150x50?text=LOGO+SK" 
+                        src="https://i.imgur.com/i3aRzWc.png" 
                         alt="SK Marketing" 
                         className="h-12 object-contain" 
                     />
