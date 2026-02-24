@@ -442,7 +442,7 @@ const ProjectsPage = ({ onNavigate }) => {
                 challenge: "A empresa precisava de uma presença mais destacada nas redes sociais, um melhor marketing interno e arquivos disponíveis para melhoria nas vendas de seus consultores.",
                 solution: "Produzir um calendário de conteúdos alinhado com as necessidades da empresa para a divulgação nas redes sociais; produzir artigos visuais para os consultores da marca; auxiliar nas demandas internas para o grupo de vendas. Assim, garantimos um crescimento de interação tanto nas redes sociais como no resultado dos vendedores.",
                 results: ["Crescimento de +30% no faturamento da empresa", "Aumento de interatividade e seguidores nas redes", "Melhor desempenho dos consultores com materiais de apresentação"]
-                          }
+            }
         },
         {
             id: 3,
@@ -465,7 +465,7 @@ const ProjectsPage = ({ onNavigate }) => {
                 challenge: "A GBS é uma empresa que vende cursos preparatórios e estava insatisfeita com os resultados de interações online e a ausência de frequência das publicações.",
                 solution: "Produzir um calendário de conteúdos alinhado com os cursos e produtos vendidos pela GBS e estabelecer ma presença digital em suas redes (interagindo com compartilhameentos, menções, comentários), além disso, produzir artes para comunicações innternas e vendas de produtos físicos (camisetas, bonés, garrafas).",
                 results: ["Aumento de 80% na interatividade e seguidores nas redes", "Melhor conversão de dados e aderência aos cursos", "Melhora de 60% da visibilididade online da marca dentro da cidade"]
-                          }
+            }
         },
         // Adicionar novos projetos
     ];
@@ -962,6 +962,7 @@ const QuoteIcon = () => (
 
 
 export default App;
+
 
 
 
