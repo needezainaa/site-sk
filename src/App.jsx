@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { Analytics } from '@vercel/analytics/react'; // Descomente no seu GitHub
+import { Analytics } from '@vercel/analytics/react';
 import { 
     Rocket, 
     Printer, 
@@ -34,10 +34,7 @@ import {
     Quote
 } from 'lucide-react';
 
-// =========================================================================
-// IMPORTAÇÃO DO MÓDULO DE LINKS (Para o GitHub)
-// Quando for subir para o GitHub, DESCOMENTE a linha abaixo:
-// import LinksPage from './LinksPage';
+import LinksPage from './LinksPage';
 // =========================================================================
 
 const App = () => {
