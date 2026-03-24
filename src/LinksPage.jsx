@@ -1,15 +1,18 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { MessageCircle, Sparkles, Layout, ChevronLeft, Send, Target, Zap, Check, Bot, User } from 'lucide-react';
+
 const LinksMenu = ({ onInternalNavigate }) => (
     <div className="min-h-screen bg-[#000000] flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
         <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-[#ff0080] rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-pulse"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-[#00e676] rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
         <div className="relative z-10 w-full max-w-sm flex flex-col items-center animate-fade-in">
-            <img src="https://i.imgur.com/i3aRzWc.png" alt="SK Logo" className="h-16 mb-6 object-contain" />
+            <img src="[https://i.imgur.com/i3aRzWc.png](https://i.imgur.com/i3aRzWc.png)" alt="SK Logo" className="h-16 mb-6 object-contain" />
             <h1 className="text-white font-display font-black text-2xl text-center mb-2">Bem-vindo(a) à SK</h1>
             <p className="text-gray-400 text-center text-sm mb-8">Escolha a melhor opção para sua empresa hoje:</p>
             <div className="w-full space-y-4">
-                <a href="https://wa.me/5511945438152?text=Ol%C3%A1!%20Vim%20pelo%20QR%20Code%20e%20quero%20conversar." target="_blank" rel="noopener noreferrer" className="w-full bg-[#25D366] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#128C7E] transition-all hover:scale-105 shadow-[4px_4px_0px_#000000] border-2 border-[#000000]"><MessageCircle size={20} />1. Fale direto no WhatsApp</a>
+                <a href="[https://wa.me/5511945438152?text=Ol%C3%A1!%20Vim%20pelo%20QR%20Code%20e%20quero%20conversar](https://wa.me/5511945438152?text=Ol%C3%A1!%20Vim%20pelo%20QR%20Code%20e%20quero%20conversar)." target="_blank" rel="noopener noreferrer" className="w-full bg-[#25D366] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#128C7E] transition-all hover:scale-105 shadow-[4px_4px_0px_#000000] border-2 border-[#000000]"><MessageCircle size={20} />1. Fale direto no WhatsApp</a>
                 <button onClick={() => onInternalNavigate('quiz')} className="w-full bg-white text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#FFD600] transition-all hover:scale-105 shadow-[4px_4px_0px_#ff0080] border-2 border-[#1a1a1a]"><Sparkles size={20} className="text-[#ff0080]" />2. Diagnóstico da Empresa</button>
-                <button onClick={() => onInternalNavigate('chatbot')} className="w-full bg-[#1a1a1a] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#00e676] hover:text-[#1a1a1a] transition-all hover:scale-105 shadow-[4px_4px_0px_#00e676] border-2 border-[#00e676]"><BotIcon size={20} />3. Teste o nosso Chatbot &lt;3</button>
+                <button onClick={() => onInternalNavigate('chatbot')} className="w-full bg-[#1a1a1a] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#00e676] hover:text-[#1a1a1a] transition-all hover:scale-105 shadow-[4px_4px_0px_#00e676] border-2 border-[#00e676]"><Bot size={20} />3. Teste o nosso Chatbot &lt;3</button>
                 <button onClick={() => { window.location.hash = ''; window.location.reload(); }} className="w-full bg-transparent text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all border-2 border-white/20 mt-4"><Layout size={20} />4. Acesse o Site Completo</button>
             </div>
         </div>
@@ -86,7 +89,7 @@ const ChatbotView = ({ onBack }) => {
             <div className="bg-[#4A148C] text-white p-4 shadow-md flex items-center justify-between z-10">
                 <div className="flex items-center gap-3">
                     <button onClick={onBack} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"><ChevronLeft size={20} /></button>
-                    <div className="relative"><div className="w-10 h-10 bg-[#FFD600] rounded-full flex items-center justify-center border-2 border-[#1a1a1a]"><BotIcon size={20} className="text-[#4A148C]" /></div><div className="absolute bottom-0 right-0 w-3 h-3 bg-[#00e676] rounded-full border-2 border-[#4A148C]"></div></div>
+                    <div className="relative"><div className="w-10 h-10 bg-[#FFD600] rounded-full flex items-center justify-center border-2 border-[#1a1a1a]"><Bot size={20} className="text-[#4A148C]" /></div><div className="absolute bottom-0 right-0 w-3 h-3 bg-[#00e676] rounded-full border-2 border-[#4A148C]"></div></div>
                     <div><h2 className="font-display font-bold leading-tight">SK Assistente</h2><span className="text-xs text-[#00e676]">Online</span></div>
                 </div>
             </div>
@@ -94,13 +97,13 @@ const ChatbotView = ({ onBack }) => {
                 {messages.map((msg) => (
                     <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
                         <div className={`max-w-[85%] md:max-w-[70%] flex gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                            <div className="flex-shrink-0 mt-auto">{msg.sender === 'bot' ? <div className="w-8 h-8 bg-[#4A148C] rounded-full flex items-center justify-center border border-[#FFD600] shadow-sm"><BotIcon size={14} className="text-white"/></div> : <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center shadow-sm"><UserIcon size={14} className="text-gray-600"/></div>}</div>
+                            <div className="flex-shrink-0 mt-auto">{msg.sender === 'bot' ? <div className="w-8 h-8 bg-[#4A148C] rounded-full flex items-center justify-center border border-[#FFD600] shadow-sm"><Bot size={14} className="text-white"/></div> : <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center shadow-sm"><User size={14} className="text-gray-600"/></div>}</div>
                             <div className={`p-3 rounded-2xl shadow-sm border-2 ${msg.sender === 'user' ? 'bg-[#FFD600] text-[#1a1a1a] border-[#1a1a1a] rounded-br-none' : 'bg-white text-gray-800 border-gray-200 rounded-bl-none'}`}><p className="text-sm font-medium whitespace-pre-wrap">{msg.text}</p></div>
                         </div>
                     </div>
                 ))}
                 {isTyping && (
-                    <div className="flex justify-start animate-fade-in"><div className="max-w-[85%] flex gap-2 flex-row"><div className="flex-shrink-0 mt-auto"><div className="w-8 h-8 bg-[#4A148C] rounded-full flex items-center justify-center border border-[#FFD600] shadow-sm"><BotIcon size={14} className="text-white"/></div></div><div className="p-3 py-4 rounded-2xl shadow-sm border-2 bg-white border-gray-200 rounded-bl-none flex items-center gap-1"><div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div><div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div><div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div></div></div></div>
+                    <div className="flex justify-start animate-fade-in"><div className="max-w-[85%] flex gap-2 flex-row"><div className="flex-shrink-0 mt-auto"><div className="w-8 h-8 bg-[#4A148C] rounded-full flex items-center justify-center border border-[#FFD600] shadow-sm"><Bot size={14} className="text-white"/></div></div><div className="p-3 py-4 rounded-2xl shadow-sm border-2 bg-white border-gray-200 rounded-bl-none flex items-center gap-1"><div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div><div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div><div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div></div></div></div>
                 )}
                 <div ref={messagesEndRef} />
             </div>
@@ -171,4 +174,4 @@ const LinksPage = ({ onNavigate }) => {
     return <LinksMenu onInternalNavigate={(screen) => setCurrentScreen(screen)} />;
 };
 
-export default App;
+export default LinksPage;
