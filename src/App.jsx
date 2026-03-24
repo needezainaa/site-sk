@@ -923,3 +923,4 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
         </nav>
     );
 };
+export default App;
