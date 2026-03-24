@@ -6,14 +6,22 @@ const LinksMenu = ({ onInternalNavigate }) => (
         <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-[#ff0080] rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-pulse"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-[#00e676] rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
         <div className="relative z-10 w-full max-w-sm flex flex-col items-center animate-fade-in">
-            <img src="[https://i.imgur.com/i3aRzWc.png](https://i.imgur.com/i3aRzWc.png)" alt="SK Logo" className="h-16 mb-6 object-contain" />
+            <img src="https://i.imgur.com/i3aRzWc.png" alt="SK Logo" className="h-16 mb-6 object-contain" />
             <h1 className="text-white font-display font-black text-2xl text-center mb-2">Bem-vindo(a) à SK</h1>
             <p className="text-gray-400 text-center text-sm mb-8">Escolha a melhor opção para sua empresa hoje:</p>
             <div className="w-full space-y-4">
-                <a href="[https://wa.me/5511945438152?text=Ol%C3%A1!%20Vim%20pelo%20QR%20Code%20e%20quero%20conversar](https://wa.me/5511945438152?text=Ol%C3%A1!%20Vim%20pelo%20QR%20Code%20e%20quero%20conversar)" target="_blank" rel="noopener noreferrer" className="w-full bg-[#25D366] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#128C7E] transition-all hover:scale-105 shadow-[4px_4px_0px_#000000] border-2 border-[#000000]"><MessageCircle size={20} />1. Fale direto no WhatsApp</a>
-                <button onClick={() => onInternalNavigate('quiz')} className="w-full bg-white text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#FFD600] transition-all hover:scale-105 shadow-[4px_4px_0px_#ff0080] border-2 border-[#1a1a1a]"><Sparkles size={20} className="text-[#ff0080]" />2. Diagnóstico da Empresa</button>
-                <button onClick={() => onInternalNavigate('chatbot')} className="w-full bg-[#1a1a1a] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#00e676] hover:text-[#1a1a1a] transition-all hover:scale-105 shadow-[4px_4px_0px_#00e676] border-2 border-[#00e676]"><Bot size={20} />3. Teste o nosso Chatbot &lt;3</button>
-                <button onClick={() => { window.location.hash = ''; window.location.reload(); }} className="w-full bg-transparent text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all border-2 border-white/20 mt-4"><Layout size={20} />4. Acesse o Site Completo</button>
+                <a href="https://wa.me/5511945438152?text=Ol%C3%A1!%20Vim%20pelo%20QR%20Code%20e%20quero%20conversar" target="_blank" rel="noopener noreferrer" className="w-full bg-[#00e676] text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#00c965] transition-all hover:scale-105 shadow-[4px_4px_0px_#1a1a1a] border-2 border-[#1a1a1a]">
+                    <MessageCircle size={20} />1. Fale direto no WhatsApp
+                </a>
+                <button onClick={() => onInternalNavigate('quiz')} className="w-full bg-[#ff0080] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#e60073] transition-all hover:scale-105 shadow-[4px_4px_0px_#1a1a1a] border-2 border-[#1a1a1a]">
+                    <Sparkles size={20} className="text-[#FFD600]" />2. Diagnóstico da Empresa
+                </button>
+                <button onClick={() => onInternalNavigate('chatbot')} className="w-full bg-[#4A148C] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#340b69] transition-all hover:scale-105 shadow-[4px_4px_0px_#FFD600] border-2 border-[#1a1a1a]">
+                    <Bot size={20} className="text-[#FFD600]" />3. Teste o nosso Chatbot &lt;3
+                </button>
+                <button onClick={() => { window.location.hash = ''; window.location.reload(); }} className="w-full bg-transparent text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all border-2 border-white/20 mt-4">
+                    <Layout size={20} />4. Acesse o Site Completo
+                </button>
             </div>
         </div>
     </div>
@@ -120,6 +128,7 @@ const ChatbotView = ({ onBack }) => {
 
 const QuizView = ({ onBack }) => {
     const [step, setStep] = useState(0);
+    const [history, setHistory] = useState([]); // Histórico de respostas
     const [scores, setScores] = useState({ "Consultoria de Marketing": 0, "Consultoria de Automação & Processos": 0, "Chatbots Personalizados": 0, "Desenvolvimento de Sites / Aplicativos": 0, "Gestão de Social Media e Criação de Conteúdo": 0, "Publicidade e Eventos": 0, "Demandas Gráficas": 0 });
 
     const questions = [
@@ -133,7 +142,27 @@ const QuizView = ({ onBack }) => {
     const handleAnswer = (servicesImpacted) => {
         const newScores = { ...scores };
         servicesImpacted.forEach(service => { if(newScores[service] !== undefined) newScores[service] += 1; });
-        setScores(newScores); setStep(step + 1);
+        setScores(newScores);
+        setHistory([...history, servicesImpacted]); // Salva a resposta atual no histórico
+        setStep(step + 1);
+    };
+
+    const handleGoBack = () => {
+        if (step > 1) {
+            // Remove o impacto da última resposta
+            const lastImpacted = history[history.length - 1];
+            const newScores = { ...scores };
+            lastImpacted.forEach(service => { if(newScores[service] !== undefined) newScores[service] -= 1; });
+            
+            setScores(newScores);
+            setHistory(history.slice(0, -1)); // Remove do histórico
+            setStep(step - 1);
+        } else if (step === 1) {
+            // Volta para a tela inicial do quiz
+            setStep(0);
+            setHistory([]);
+            setScores({ "Consultoria de Marketing": 0, "Consultoria de Automação & Processos": 0, "Chatbots Personalizados": 0, "Desenvolvimento de Sites / Aplicativos": 0, "Gestão de Social Media e Criação de Conteúdo": 0, "Publicidade e Eventos": 0, "Demandas Gráficas": 0 });
+        }
     };
 
     const getTopServices = () => Object.entries(scores).sort((a, b) => b[1] - a[1]).slice(0, 2).map(i => i[0]);
@@ -155,9 +184,55 @@ const QuizView = ({ onBack }) => {
                         {step > 0 && step <= questions.length && (<div className="mt-4 flex gap-1 justify-center relative z-10">{questions.map((_, i) => (<div key={i} className={`h-2 rounded-full transition-all duration-500 ${i < step ? 'w-6 bg-[#00e676]' : 'w-3 bg-white/20'}`}></div>))}</div>)}
                     </div>
                     <div className="p-8 md:p-10">
-                        {step === 0 && (<div className="text-center animate-fade-in"><h3 className="font-display font-bold text-2xl text-[#1a1a1a] mb-4">Descubra o que sua empresa precisa AGORA.</h3><p className="text-gray-600 mb-8 leading-relaxed">Responda a {questions.length} perguntas rápidas e nosso sistema inteligente vai cruzar seus gargalos com as soluções exatas da SK.</p><button onClick={() => setStep(1)} className="w-full bg-[#00e676] text-[#1a1a1a] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#00c965] transition-all flex items-center justify-center gap-2 border-2 border-[#1a1a1a] shadow-[0_4px_0px_#1a1a1a]">Iniciar Diagnóstico <Zap size={20} /></button></div>)}
-                        {step > 0 && step <= questions.length && (<div className="animate-slide-up"><span className="text-sm font-bold text-[#ff0080] mb-2 block">Pergunta {step} de {questions.length}</span><h3 className="font-display font-bold text-xl text-[#1a1a1a] mb-6">{questions[step - 1].title}</h3><div className="space-y-3">{questions[step - 1].options.map((opt, idx) => (<button key={idx} onClick={() => handleAnswer(opt.services)} className="w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-[#ff0080] hover:bg-[#f8fafc] transition-all group"><span className="font-medium text-gray-700 group-hover:text-[#1a1a1a]">{opt.text}</span></button>))}</div></div>)}
-                        {step > questions.length && (<div className="text-center animate-fade-in"><h3 className="font-display font-black text-2xl text-[#1a1a1a] mb-2">Diagnóstico Concluído!</h3><p className="text-gray-600 mb-6">Com base nas suas respostas, a nossa equipe deve focar em:</p><div className="bg-[#f8fafc] p-4 rounded-xl border-2 border-dashed border-[#4a148c]/30 mb-8 space-y-3">{getTopServices().map((srv, i) => (<div key={i} className="bg-white p-3 rounded-lg border border-gray-200 font-bold text-[#4a148c] shadow-sm flex items-center justify-center gap-2 text-center"><Check size={18} className="text-[#00e676]" /> {srv}</div>))}</div><a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="w-full bg-[#ff0080] text-white font-black uppercase tracking-widest py-4 rounded-xl transition-all flex items-center justify-center gap-2 border-2 border-[#1a1a1a] shadow-[0_4px_0px_#1a1a1a] mb-4 hover:-translate-y-1">Finalizar no WhatsApp <MessageCircle size={20} /></a><button onClick={onBack} className="text-gray-500 font-bold text-sm hover:text-[#1a1a1a] underline decoration-2 underline-offset-4">Voltar para o Menu</button></div>)}
+                        {step === 0 && (
+                            <div className="text-center animate-fade-in">
+                                <h3 className="font-display font-bold text-2xl text-[#1a1a1a] mb-4">Descubra o que sua empresa precisa AGORA.</h3>
+                                <p className="text-gray-600 mb-8 leading-relaxed">Responda a {questions.length} perguntas rápidas e nosso sistema inteligente vai cruzar seus gargalos com as soluções exatas da SK.</p>
+                                <button onClick={() => setStep(1)} className="w-full bg-[#00e676] text-[#1a1a1a] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#00c965] transition-all flex items-center justify-center gap-2 border-2 border-[#1a1a1a] shadow-[0_4px_0px_#1a1a1a]">Iniciar Diagnóstico <Zap size={20} /></button>
+                            </div>
+                        )}
+                        {step > 0 && step <= questions.length && (
+                            <div className="animate-slide-up">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-bold text-[#ff0080]">Pergunta {step} de {questions.length}</span>
+                                    <button onClick={handleGoBack} className="text-xs font-bold text-gray-500 hover:text-[#1a1a1a] flex items-center gap-1 transition-colors bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+                                        <ChevronLeft size={14} /> Voltar
+                                    </button>
+                                </div>
+                                <h3 className="font-display font-bold text-xl text-[#1a1a1a] mb-6">{questions[step - 1].title}</h3>
+                                <div className="space-y-3">
+                                    {questions[step - 1].options.map((opt, idx) => (
+                                        <button key={idx} onClick={() => handleAnswer(opt.services)} className="w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-[#ff0080] hover:bg-[#f8fafc] transition-all group">
+                                            <span className="font-medium text-gray-700 group-hover:text-[#1a1a1a]">{opt.text}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        {step > questions.length && (
+                            <div className="text-center animate-fade-in">
+                                <h3 className="font-display font-black text-2xl text-[#1a1a1a] mb-2">Diagnóstico Concluído!</h3>
+                                <p className="text-gray-600 mb-6">Com base nas suas respostas, a nossa equipe deve focar em:</p>
+                                <div className="bg-[#f8fafc] p-4 rounded-xl border-2 border-dashed border-[#4a148c]/30 mb-8 space-y-3">
+                                    {getTopServices().map((srv, i) => (
+                                        <div key={i} className="bg-white p-3 rounded-lg border border-gray-200 font-bold text-[#4a148c] shadow-sm flex items-center justify-center gap-2 text-center">
+                                            <Check size={18} className="text-[#00e676]" /> {srv}
+                                        </div>
+                                    ))}
+                                </div>
+                                <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="w-full bg-[#ff0080] text-white font-black uppercase tracking-widest py-4 rounded-xl transition-all flex items-center justify-center gap-2 border-2 border-[#1a1a1a] shadow-[0_4px_0px_#1a1a1a] mb-4 hover:-translate-y-1">
+                                    Finalizar no WhatsApp <MessageCircle size={20} />
+                                </a>
+                                <div className="flex justify-between items-center mt-6">
+                                    <button onClick={handleGoBack} className="text-gray-500 font-bold text-sm hover:text-[#ff0080] underline decoration-2 underline-offset-4 flex items-center gap-1">
+                                        <ChevronLeft size={16} /> Alterar Resposta
+                                    </button>
+                                    <button onClick={onBack} className="text-gray-500 font-bold text-sm hover:text-[#1a1a1a] underline decoration-2 underline-offset-4">
+                                        Voltar para o Menu
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -175,3 +250,4 @@ const LinksPage = ({ onNavigate }) => {
 };
 
 export default LinksPage;
+```
