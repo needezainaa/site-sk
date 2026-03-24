@@ -1,41 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { 
-    Rocket, 
-    Printer, 
-    Megaphone, 
-    Target, 
-    Cpu, 
-    Smile, 
-    MessageCircle, 
-    Menu, 
-    X, 
-    ArrowRight, 
-    MousePointer2,
-    Palette,
-    Zap,
-    Layout,
-    Code,
-    Sparkles,
-    TrendingUp,
-    Filter,
-    ExternalLink,
-    ChevronLeft,
-    ChevronRight,
-    Check,
-    Play,
-    Pause,
-    Instagram,
-    Linkedin,
-    Send,
-    DollarSign,
-    Calendar,
-    Monitor,
-    Quote
+    Rocket, Printer, Megaphone, Target, Cpu, Smile, MessageCircle, 
+    Menu, X, ArrowRight, Palette, Zap, Layout, Code, Sparkles, 
+    TrendingUp, ChevronLeft, ChevronRight, Check, Instagram, Linkedin, Send, Monitor, Quote
 } from 'lucide-react';
 
 import LinksPage from './LinksPage';
-// =========================================================================
 
 const App = () => {
     const [currentView, setCurrentView] = useState('home');
@@ -60,7 +31,6 @@ const App = () => {
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
             }, 100);
         } else if (view === 'home') {
-            // Limpa a URL caso estivesse na página de links
             window.history.pushState('', document.title, window.location.pathname + window.location.search);
         }
     };
@@ -114,6 +84,7 @@ const App = () => {
         }
         
         .animate-float { animation: float 5s ease-in-out infinite; }
+        .animate-float-delay { animation: float 5s ease-in-out infinite; animation-delay: 2.5s; }
         .animate-spin-slow { animation: spin 15s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
@@ -140,12 +111,12 @@ const App = () => {
         }
     `;
 
-    // Renderiza a página de links se a URL estiver ativada
     if (currentView === 'links') {
         return (
             <>
                 <style>{globalStyles}</style>
-                <LinksPage onNavigate={handleNavigate} />
+                <LinksPage /> 
+                <DummyLinksPage /> 
             </>
         );
     }
@@ -173,16 +144,61 @@ const App = () => {
 
             {isBriefingOpen && <BriefingModal onClose={handleCloseBriefing} initialService={selectedService} />}
             
-            <Analytics />
+            {/* <Analytics /> */}
         </div>
     );
 };
 
+const Hero = ({ onNavigate, onOpenBriefing }) => {
+    return (
+        <section id="home" className="relative pt-32 pb-20 overflow-hidden bg-tech-grid min-h-[95vh] flex items-center">
+            <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-[#FFD600] rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#DA00F9] rounded-full mix-blend-multiply filter blur-[100px] opacity-10"></div>
+            <div className="absolute top-40 left-40 w-[200px] h-[200px] bg-[#8DFF4F] rounded-full mix-blend-multiply filter blur-[80px] opacity-15"></div>
+
+            <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+                <div className="space-y-8 relative">
+                    <div className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 rounded-full shadow-sm">
+                        <span className="relative flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DFF4F] opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-[#8DFF4F]"></span></span>
+                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Soluções de comunicação.</span>
+                    </div>
+                    <h1 className="font-display font-black text-5xl md:text-7xl text-[#000000] leading-[1.05]">SUA MARCA <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4A148C] to-[#DA00F9]">MERECE MAIS</span> <br /><span className="relative inline-block z-10">DO QUE O BÁSICO<svg className="absolute w-[110%] h-4 -bottom-2 -left-2 text-[#FFD600] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="8" fill="none" /></svg></span></h1>
+                    <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6">Comunique o que quiser! Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button onClick={() => onOpenBriefing('Social Media')} className="bg-[#4A148C] text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 group shadow-[6px_6px_0px_#FFD600] border-2 border-[#4A148C] hover:scale-105 transition-all duration-300">Quero Ser Visto <Rocket size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"/></button>
+                        <button onClick={() => onNavigate('projetos')} className="bg-white text-[#000000] border-2 border-[#000000] px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">Ver Projetos <Zap size={20} className="text-[#FFD600] fill-[#FFD600]" /></button>
+                    </div>
+                </div>
+                <div className="relative hidden lg:block h-full min-h-[500px] w-full">
+                    <div className="absolute top-[45%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] xl:w-[450px] xl:h-[450px] border border-dashed border-[#4A148C]/20 rounded-full animate-spin-slow"></div>
+                    <div className="absolute top-[45%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-72 xl:w-80 bg-white rounded-2xl border-2 border-[#000000] shadow-[12px_12px_0px_#4A148C] p-6 z-20 animate-float">
+                        <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
+                            <div className="flex items-center gap-3"><div className="w-10 h-10 bg-[#FFD600] rounded-full border-2 border-[#000000] flex items-center justify-center"><Smile size={20} className="text-[#000000]" /></div><div><div className="font-bold text-sm">Status da Marca</div><div className="text-xs text-[#8DFF4F] font-bold flex items-center gap-1"><div className="w-2 h-2 bg-[#8DFF4F] rounded-full animate-pulse"></div> Online</div></div></div>
+                            <Code size={20} className="text-gray-300" />
+                        </div>
+                        <div className="space-y-4">
+                            <div className="bg-[#F5F5F6] p-3 rounded-lg border border-gray-100 relative overflow-hidden group hover:border-[#DA00F9] transition-colors"><div className="flex justify-between items-center mb-2 relative z-10"><span className="text-xs font-bold text-gray-500">ENGAJAMENTO</span><TrendingUp size={16} className="text-[#DA00F9]" /></div><div className="text-2xl font-display font-bold text-[#000000] relative z-10">+ 840%</div><div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200"><div className="h-full bg-[#DA00F9] w-[85%]"></div></div></div>
+                            <div className="bg-[#F5F5F6] p-3 rounded-lg border border-gray-100 relative overflow-hidden group hover:border-[#8DFF4F] transition-colors"><div className="flex justify-between items-center mb-2 relative z-10"><span className="text-xs font-bold text-gray-500">QUALIDADE VISUAL</span><Sparkles size={16} className="text-[#8DFF4F]" /></div><div className="text-2xl font-display font-bold text-[#000000] relative z-10">Ultra HD</div><div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200"><div className="h-full bg-[#8DFF4F] w-[98%]"></div></div></div>
+                        </div>
+                        <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
+                            <span className="text-xs text-gray-400 font-mono">ID: SK-2026</span>
+                            <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-[#DA00F9]"></div><div className="w-2 h-2 rounded-full bg-[#FFD600]"></div><div className="w-2 h-2 rounded-full bg-[#4A148C]"></div></div>
+                        </div>
+                    </div>
+                    {/* Ícones Flutuantes do Topo */}
+                    <div className="absolute top-[20%] right-[15%] glass-card bg-white p-3 rounded-xl border border-[#DA00F9]/30 shadow-lg animate-float-delay z-30"><Megaphone size={24} className="text-[#DA00F9]" /></div>
+                    <div className="absolute bottom-[30%] left-[20%] glass-card bg-white p-3 rounded-xl border border-[#8DFF4F]/30 shadow-lg animate-float z-30" style={{animationDelay: '1.5s'}}><Printer size={24} className="text-[#8DFF4F]" /></div>
+                    <div className="absolute bottom-[15%] right-[15%] bg-[#1A1A1A] text-[#FFD600] px-5 py-2.5 rounded-xl font-bold text-sm shadow-xl animate-float z-10 rotate-3 border-2 border-[#FFD600]">#GeekMarketing</div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
 const Services = ({ onOpenBriefing }) => {
-    // Adicionada a chave briefingKey para garantir o link correto com o modal
     const services = [
         { icon: <Target size={32} />, title: "Consultoria de Marketing", briefingKey: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
-        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações & Processos", briefingKey: "Consultoria de Processos", desc: "Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" },
+        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações", briefingKey: "Consultoria de Processos", desc: "Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" },
         { icon: <MessageCircle size={32} />, title: "Social Media", briefingKey: "Social Media", desc: "Conteúdo que engaja. Transformamos seguidores em fãs leais.", color: "text-[#4A148C]", bgClass: "bg-[#4A148C]/5", borderClass: "border-[#4A148C]/20", hoverColor: "hover:border-[#4A148C]" },
         { icon: <Monitor size={32} />, title: "Web Design", briefingKey: "Web Design", desc: "Sites rápidos e landing pages que convertem visitantes em clientes.", color: "text-[#FFD600]", bgClass: "bg-[#FFD600]/10", borderClass: "border-[#FFD600]/30", hoverColor: "hover:border-[#FFD600]" },
         { icon: <Printer size={32} />, title: "Gráfica & Print", briefingKey: "Gráfica e Impressos", desc: "Cartões e banners. A qualidade da sua marca no mundo físico.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
@@ -282,9 +298,8 @@ const Footer = () => {
                         <Linkedin size={18} />
                     </a>
                 </div>
-                {/* Versículo Adicionado */}
                 <p className="mt-8 text-gray-400 text-[11px] md:text-xs italic max-w-xl mx-auto leading-relaxed font-medium">
-                    "³⁶ Porque dEle e por Ele, e para Ele, são todas as coisas; glória, pois, a Ele eternamente. Amém. - Rm 11:36"
+                    "³⁶ Porque dEle e por Ele, e para Ele, são todas as coisas; glória, pois, a Ele eternamente. Amém. - Romanos 11:36"
                 </p>
             </div>
         </footer>
@@ -295,7 +310,6 @@ const Contact = () => {
     const [formState, setFormState] = useState({ name: '', email: '', message: '' });
     const handleSubmit = (e) => { e.preventDefault(); alert(`Mensagem enviada! (Simulação)\nNome: ${formState.name}\nObrigado por contatar a SK!`); setFormState({ name: '', email: '', message: '' }); };
     
-    // Proporções atualizadas para 45% e 55% para dar mais espaço e e-mail com break-all
     return (
         <section id="contato" className="py-24 bg-tech-grid">
             <div className="container mx-auto px-6 max-w-5xl">
@@ -307,12 +321,16 @@ const Contact = () => {
                             <p className="text-purple-200 mb-8 leading-relaxed">Preencha o formulário e nossa equipe entrará em contato mais rápido que um processador de última geração.</p>
                             <div className="space-y-4">
                                 <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group">
-                                    <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0"><MessageCircle size={18} /></div>
+                                    <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0">
+                                        <MessageCircle size={18} />
+                                    </div>
                                     <span className="break-all">skmarketingecomunicacao@gmail.com</span>
                                 </div>
-                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group">
-                                    <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0"><Layout size={18} /></div>
-                                    skcomunique.com.br
+                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group" onClick={() => window.open('https://instagram.com/skmarketingecomunicacao', '_blank')}>
+                                    <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0">
+                                        <Instagram size={18} />
+                                    </div>
+                                    @skcomunique
                                 </div>
                             </div>
                         </div>
@@ -330,227 +348,6 @@ const Contact = () => {
                 </div>
             </div>
         </section>
-    );
-};
-
-const BriefingModal = ({ onClose, initialService }) => {
-    const [step, setStep] = useState(1);
-    const [serviceType, setServiceType] = useState(initialService || 'Social Media');
-    const [formData, setFormData] = useState({
-        name: '',
-        company: '',
-        budget: 'Não tenho certeza',
-        q1: '', q2: '', q3: '', q4: '', q5: ''
-    });
-
-    useEffect(() => {
-        if (initialService) setServiceType(initialService);
-    }, [initialService]);
-
-    const questionsByService = {
-        'Social Media': [
-            "Qual o principal objetivo? (Vendas, Seguidores, Branding)",
-            "Qual a frequência de postagem atual da marca?",
-            "Quais são os 3 principais concorrentes que você admira?",
-            "Tem referências visuais de perfis que gosta? (Coloque links)",
-            "Quem é o público-alvo que você quer atingir?"
-        ],
-        'Identidade Visual': [
-            "Como você descreveria a personalidade da marca em 3 palavras?",
-            "Existe alguma cor que você AMA e alguma que ODEIA?",
-            "Onde a marca será mais aplicada? (Digital, Fachada, Embalagem)",
-            "Quais marcas te inspiram visualmente hoje?",
-            "Qual a mensagem principal que o logo deve transmitir?"
-        ],
-        'Gráfica e Impressos': [
-            "Quais materiais você precisa produzir? (Cartões, Banners, Adesivos...)",
-            "Qual a quantidade estimada para cada item?",
-            "Já possui a arte pronta ou precisa que a gente crie?",
-            "Qual o prazo ideal para receber esse material?",
-            "Tem preferência por algum acabamento específico (Brilho, Fosco, Verniz)?"
-        ],
-        'Consultoria de Marketing': [
-            "Qual o maior desafio de vendas/marketing da empresa hoje?",
-            "Já investiram em marketing antes? O que funcionou e o que falhou?",
-            "Qual seu ticket médio (valor médio de venda) atual?",
-            "Quais canais de vendas vocês usam hoje?",
-            "Onde você quer que a empresa esteja daqui a 6 meses?"
-        ],
-        'Consultoria de Processos': [
-            "Qual o processo mais 'travado' ou lento da empresa hoje?",
-            "Quais ferramentas a equipe usa? (WhatsApp, Excel, Trello...)",
-            "Quantas pessoas identities na operação diária?",
-            "Onde acontecem os maiores erros operacionais atualmente?",
-            "O que você gostaria de automatizar primeiro se pudesse?"
-        ],
-        'Web Design': [
-            "Qual o objetivo do site? (Vender, Informar, Capturar Leads)",
-            "Tem algum site de referência que você acha incrível?",
-            "Você já possui domínio (www) e hospedagem?",
-            "Quantas páginas você imagina que o site terá?",
-            "Possui fotos e textos prontos ou vamos precisar criar?"
-        ]
-    };
-
-    const currentQuestions = questionsByService[serviceType] || questionsByService['Social Media'];
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setStep(2);
-    };
-
-    const getWhatsAppLink = () => {
-        let message = `*NOVO BRIEFING ENVIADO PELO SITE*\n\n`;
-        message += `👤 *Nome:* ${formData.name}\n`;
-        message += `🏢 *Empresa:* ${formData.company}\n`;
-        message += `🚀 *Serviço:* ${serviceType}\n`;
-        message += `💰 *Verba:* ${formData.budget}\n\n`;
-        message += `*--- DETALHES ---*\n`;
-        
-        currentQuestions.forEach((q, index) => {
-            const answerKey = `q${index + 1}`;
-            message += `\n❓ *${q}*\n👉 ${formData[answerKey] || 'Sem resposta'}\n`;
-        });
-
-        return `https://wa.me/5511945438152?text=${encodeURIComponent(message)}`;
-    };
-
-    return (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 animate-fade-in">
-            <div className="absolute inset-0 bg-[#1a1a1a]/90 backdrop-blur-sm" onClick={onClose}></div>
-            
-            <div className="bg-white rounded-2xl w-full max-w-4xl relative z-10 animate-slide-up shadow-2xl border-4 border-[#1a1a1a] overflow-hidden max-h-[90vh] overflow-y-auto">
-                <button onClick={onClose} className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
-                    <X size={20} />
-                </button>
-
-                {step === 1 ? (
-                    <div className="flex flex-col md:flex-row min-h-[600px]">
-                        <div className="hidden md:flex w-1/3 bg-[#DA00F9] p-8 flex-col justify-between text-white relative overflow-hidden">
-                            <div className="relative z-10">
-                                <div className="w-10 h-10 bg-[#FFD600] rounded-lg flex items-center justify-center text-[#DA00F9] font-bold mb-6 border-2 border-[#000000]">SK</div>
-                                <h3 className="font-display font-bold text-3xl mb-4 leading-tight">Bora tirar esse projeto do papel?</h3>
-                                <p className="text-white text-sm font-medium">Preencha o briefing ao lado para nossa equipe entender sua missão com clareza.</p>
-                            </div>
-                            
-                            <div className="relative z-10 space-y-6 mt-8">
-                                <div className="p-4 bg-white/10 rounded-xl backdrop-blur-md border border-white/20">
-                                    <div className="flex items-center gap-2 font-bold mb-1 text-[#FFD600]"><Zap size={16} /> Fast Track</div>
-                                    <p className="text-xs text-white/90">Briefing detalhado agiliza nosso orçamento em até 50%.</p>
-                                </div>
-                                <div className="p-4 bg-white/10 rounded-xl backdrop-blur-md border border-white/20">
-                                    <div className="flex items-center gap-2 font-bold mb-1 text-[#8DFF4F]"><Check size={16} /> Especialistas</div>
-                                    <p className="text-xs text-white/90">Sua resposta vai direto para o especialista da área.</p>
-                                </div>
-                            </div>
-
-                            <div className="absolute top-0 right-0 w-40 h-40 bg-[#4A148C] rounded-full blur-3xl opacity-40 translate-x-1/2 -translate-y-1/2"></div>
-                            <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#FFD600] rounded-full blur-3xl opacity-30 -translate-x-1/2 translate-y-1/2"></div>
-                        </div>
-
-                        <div className="w-full md:w-2/3 p-8 md:p-10 bg-white">
-                            <div className="mb-6 border-b border-gray-100 pb-4">
-                                <h2 className="font-display font-black text-3xl text-[#000000]">Briefing Tático</h2>
-                                <p className="text-gray-500 text-sm">Focando em: <span className="font-bold text-[#DA00F9]">{serviceType}</span></p>
-                            </div>
-
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Seu Nome</label>
-                                        <input required type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all font-medium" placeholder="Ex: Tony Stark" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Empresa / Marca</label>
-                                        <input type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all font-medium" placeholder="Ex: Stark Ind." value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Área do Projeto</label>
-                                        <div className="relative">
-                                            <select 
-                                                className="w-full p-3 bg-[#F5F5F6] border-2 border-[#000000] rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all appearance-none cursor-pointer font-bold text-[#000000]"
-                                                value={serviceType}
-                                                onChange={(e) => {
-                                                    setServiceType(e.target.value);
-                                                    setFormData(prev => ({...prev, q1:'', q2:'', q3:'', q4:'', q5:''}));
-                                                }}
-                                            >
-                                                {Object.keys(questionsByService).map(s => (
-                                                    <option key={s} value={s}>{s}</option>
-                                                ))}
-                                            </select>
-                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                <ChevronLeft size={16} className="-rotate-90 text-[#000000]" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Verba Estimada</label>
-                                        <select className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all appearance-none cursor-pointer" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})}>
-                                            <option>Não tenho certeza</option>
-                                            <option>Até R$ 1.000</option>
-                                            <option>R$ 1.000 - R$ 3.000</option>
-                                            <option>R$ 3.000 - R$ 5.000</option>
-                                            <option>Acima de R$ 5.000</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="bg-[#F5F5F6] p-6 rounded-xl border border-gray-100 space-y-4">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <Sparkles size={18} className="text-[#DA00F9]" />
-                                        <h4 className="font-bold text-[#000000] text-sm uppercase tracking-wide">Detalhes: {serviceType}</h4>
-                                    </div>
-                                    
-                                    {currentQuestions.map((q, idx) => {
-                                        const key = `q${idx + 1}`;
-                                        return (
-                                            <div key={idx}>
-                                                <label className="block text-xs font-bold text-gray-600 mb-1.5">{idx + 1}. {q}</label>
-                                                <input type="text" required className="w-full p-2.5 bg-white border border-gray-200 rounded focus:border-[#DA00F9] focus:ring-1 focus:ring-[#DA00F9] outline-none transition-all text-sm" placeholder="Sua resposta aqui..." value={formData[key]} onChange={(e) => setFormData({...formData, [key]: e.target.value})} />
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-
-                                <button type="submit" className="w-full bg-[#8DFF4F] text-[#000000] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#7ce644] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 shadow-[0_4px_0px_#000000] active:translate-y-0 active:shadow-none border-2 border-[#000000]">
-                                    Enviar Briefing <Send size={20} />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="p-12 text-center flex flex-col items-center justify-center min-h-[500px] bg-tech-grid">
-                        <div className="w-24 h-24 bg-[#8DFF4F] rounded-full flex items-center justify-center mb-6 animate-bounce shadow-[0_0_30px_rgba(141,255,79,0.4)] border-4 border-[#000000]">
-                            <Check size={48} className="text-[#000000]" strokeWidth={4} />
-                        </div>
-                        <h2 className="font-display font-black text-4xl text-[#000000] mb-4">Briefing Recebido!</h2>
-                        <p className="text-gray-600 mb-8 max-w-lg text-lg">
-                            Analisamos suas respostas e já temos uma ideia de como atacar.
-                            <br/><br/>
-                            Clique abaixo para enviar esses dados para nosso WhatsApp e falar com um especialista agora mesmo.
-                        </p>
-                        
-                        <a 
-                            href={getWhatsAppLink()} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="bg-[#25D366] text-white px-8 py-5 rounded-xl font-bold text-xl hover:bg-[#128C7E] transition-all flex items-center gap-3 shadow-[6px_6px_0px_#000000] border-2 border-[#000000] hover:-translate-y-1 hover:shadow-[8px_8px_0px_#000000]"
-                        >
-                            <MessageCircle size={28} />
-                            Finalizar no WhatsApp
-                        </a>
-                        
-                        <button onClick={onClose} className="mt-8 text-gray-400 hover:text-[#DA00F9] text-sm font-bold underline decoration-2 underline-offset-4">
-                            Fechar e voltar ao site
-                        </button>
-                    </div>
-                )}
-            </div>
-        </div>
     );
 };
 
@@ -812,47 +609,224 @@ const ProjectModal = ({ project, onClose }) => {
     );
 };
 
-const Hero = ({ onNavigate, onOpenBriefing }) => {
-    return (
-        <section id="home" className="relative pt-32 pb-20 overflow-hidden bg-tech-grid min-h-[95vh] flex items-center">
-            <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-[#FFD600] rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-pulse"></div>
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#DA00F9] rounded-full mix-blend-multiply filter blur-[100px] opacity-10"></div>
-            <div className="absolute top-40 left-40 w-[200px] h-[200px] bg-[#8DFF4F] rounded-full mix-blend-multiply filter blur-[80px] opacity-15"></div>
+const BriefingModal = ({ onClose, initialService }) => {
+    const [step, setStep] = useState(1);
+    const [serviceType, setServiceType] = useState(initialService || 'Social Media');
+    const [formData, setFormData] = useState({
+        name: '',
+        company: '',
+        budget: 'Não tenho certeza',
+        q1: '', q2: '', q3: '', q4: '', q5: ''
+    });
 
-            <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-                <div className="space-y-8 relative">
-                    <div className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 rounded-full shadow-sm">
-                        <span className="relative flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DFF4F] opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-[#8DFF4F]"></span></span>
-                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Soluções de Comunicação</span>
-                    </div>
-                    <h1 className="font-display font-black text-5xl md:text-7xl text-[#000000] leading-[1.05]">SUA MARCA <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4A148C] to-[#DA00F9]">MERECE MAIS</span> <br /><span className="relative inline-block z-10">DO QUE O BÁSICO<svg className="absolute w-[110%] h-4 -bottom-2 -left-2 text-[#FFD600] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="8" fill="none" /></svg></span></h1>
-                    <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6">Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
-                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <button onClick={() => onOpenBriefing('Social Media')} className="bg-[#4A148C] text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 group shadow-[6px_6px_0px_#FFD600] border-2 border-[#4A148C] hover:scale-105 transition-all duration-300">Quero Ser Visto <Rocket size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"/></button>
-                        <button onClick={() => onNavigate('projetos')} className="bg-white text-[#000000] border-2 border-[#000000] px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">Ver Projetos <Zap size={20} className="text-[#FFD600] fill-[#FFD600]" /></button>
-                    </div>
-                </div>
-                <div className="relative hidden lg:block h-full min-h-[500px] w-full">
-                    <div className="absolute top-[45%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] xl:w-[450px] xl:h-[450px] border border-dashed border-[#4A148C]/20 rounded-full animate-spin-slow"></div>
-                    <div className="absolute top-[45%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-72 xl:w-80 bg-white rounded-2xl border-2 border-[#000000] shadow-[12px_12px_0px_#4A148C] p-6 z-20 animate-float">
-                        <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
-                            <div className="flex items-center gap-3"><div className="w-10 h-10 bg-[#FFD600] rounded-full border-2 border-[#000000] flex items-center justify-center"><Smile size={20} className="text-[#000000]" /></div><div><div className="font-bold text-sm">Status da Marca</div><div className="text-xs text-[#8DFF4F] font-bold flex items-center gap-1"><div className="w-2 h-2 bg-[#8DFF4F] rounded-full animate-pulse"></div> Online</div></div></div>
-                            <Code size={20} className="text-gray-300" />
+    useEffect(() => {
+        if (initialService) setServiceType(initialService);
+    }, [initialService]);
+
+    const questionsByService = {
+        'Social Media': [
+            "Qual o principal objetivo? (Vendas, Seguidores, Branding)",
+            "Qual a frequência de postagem atual da marca?",
+            "Quais são os 3 principais concorrentes que você admira?",
+            "Tem referências visuais de perfis que gosta? (Coloque links)",
+            "Quem é o público-alvo que você quer atingir?"
+        ],
+        'Identidade Visual': [
+            "Como você descreveria a personalidade da marca em 3 palavras?",
+            "Existe alguma cor que você AMA e alguma que ODEIA?",
+            "Onde a marca será mais aplicada? (Digital, Fachada, Embalagem)",
+            "Quais marcas te inspiram visualmente hoje?",
+            "Qual a mensagem principal que o logo deve transmitir?"
+        ],
+        'Gráfica e Impressos': [
+            "Quais materiais você precisa produzir? (Cartões, Banners, Adesivos...)",
+            "Qual a quantidade estimada para cada item?",
+            "Já possui a arte pronta ou precisa que a gente crie?",
+            "Qual o prazo ideal para receber esse material?",
+            "Tem preferência por algum acabamento específico (Brilho, Fosco, Verniz)?"
+        ],
+        'Consultoria de Marketing': [
+            "Qual o maior desafio de vendas/marketing da empresa hoje?",
+            "Já investiram em marketing antes? O que funcionou e o que falhou?",
+            "Qual seu ticket médio (valor médio de venda) atual?",
+            "Quais canais de vendas vocês usam hoje?",
+            "Onde você quer que a empresa esteja daqui a 6 meses?"
+        ],
+        'Consultoria de Processos': [
+            "Qual o processo mais 'travado' ou lento da empresa hoje?",
+            "Quais ferramentas a equipe usa? (WhatsApp, Excel, Trello...)",
+            "Quantas pessoas identities na operação diária?",
+            "Onde acontecem os maiores erros operacionais atualmente?",
+            "O que você gostaria de automatizar primeiro se pudesse?"
+        ],
+        'Web Design': [
+            "Qual o objetivo do site? (Vender, Informar, Capturar Leads)",
+            "Tem algum site de referência que você acha incrível?",
+            "Você já possui domínio (www) e hospedagem?",
+            "Quantas páginas você imagina que o site terá?",
+            "Possui fotos e textos prontos ou vamos precisar criar?"
+        ]
+    };
+
+    const currentQuestions = questionsByService[serviceType] || questionsByService['Social Media'];
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setStep(2);
+    };
+
+    const getWhatsAppLink = () => {
+        let message = `*NOVO BRIEFING ENVIADO PELO SITE*\n\n`;
+        message += `👤 *Nome:* ${formData.name}\n`;
+        message += `🏢 *Empresa:* ${formData.company}\n`;
+        message += `🚀 *Serviço:* ${serviceType}\n`;
+        message += `💰 *Verba:* ${formData.budget}\n\n`;
+        message += `*--- DETALHES ---*\n`;
+        
+        currentQuestions.forEach((q, index) => {
+            const answerKey = `q${index + 1}`;
+            message += `\n❓ *${q}*\n👉 ${formData[answerKey] || 'Sem resposta'}\n`;
+        });
+
+        return `https://wa.me/5511945438152?text=${encodeURIComponent(message)}`;
+    };
+
+    return (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 animate-fade-in">
+            <div className="absolute inset-0 bg-[#1a1a1a]/90 backdrop-blur-sm" onClick={onClose}></div>
+            
+            <div className="bg-white rounded-2xl w-full max-w-4xl relative z-10 animate-slide-up shadow-2xl border-4 border-[#1a1a1a] overflow-hidden max-h-[90vh] overflow-y-auto">
+                <button onClick={onClose} className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+                    <X size={20} />
+                </button>
+
+                {step === 1 ? (
+                    <div className="flex flex-col md:flex-row min-h-[600px]">
+                        <div className="hidden md:flex w-1/3 bg-[#DA00F9] p-8 flex-col justify-between text-white relative overflow-hidden">
+                            <div className="relative z-10">
+                                <div className="w-10 h-10 bg-[#FFD600] rounded-lg flex items-center justify-center text-[#DA00F9] font-bold mb-6 border-2 border-[#000000]">SK</div>
+                                <h3 className="font-display font-bold text-3xl mb-4 leading-tight">Bora tirar esse projeto do papel?</h3>
+                                <p className="text-white text-sm font-medium">Preencha o briefing ao lado para nossa equipe entender sua missão com clareza.</p>
+                            </div>
+                            
+                            <div className="relative z-10 space-y-6 mt-8">
+                                <div className="p-4 bg-white/10 rounded-xl backdrop-blur-md border border-white/20">
+                                    <div className="flex items-center gap-2 font-bold mb-1 text-[#FFD600]"><Zap size={16} /> Fast Track</div>
+                                    <p className="text-xs text-white/90">Briefing detalhado agiliza nosso orçamento em até 50%.</p>
+                                </div>
+                                <div className="p-4 bg-white/10 rounded-xl backdrop-blur-md border border-white/20">
+                                    <div className="flex items-center gap-2 font-bold mb-1 text-[#8DFF4F]"><Check size={16} /> Especialistas</div>
+                                    <p className="text-xs text-white/90">Sua resposta vai direto para o especialista da área.</p>
+                                </div>
+                            </div>
+
+                            <div className="absolute top-0 right-0 w-40 h-40 bg-[#4A148C] rounded-full blur-3xl opacity-40 translate-x-1/2 -translate-y-1/2"></div>
+                            <div className="absolute bottom-0 left-0 w-40 h-40 bg-[#FFD600] rounded-full blur-3xl opacity-30 -translate-x-1/2 translate-y-1/2"></div>
                         </div>
-                        <div className="space-y-4">
-                            <div className="bg-[#F5F5F6] p-3 rounded-lg border border-gray-100 relative overflow-hidden group hover:border-[#DA00F9] transition-colors"><div className="flex justify-between items-center mb-2 relative z-10"><span className="text-xs font-bold text-gray-500">ENGAJAMENTO</span><TrendingUp size={16} className="text-[#DA00F9]" /></div><div className="text-2xl font-display font-bold text-[#000000] relative z-10">+ 840%</div><div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200"><div className="h-full bg-[#DA00F9] w-[85%]"></div></div></div>
-                            <div className="bg-[#F5F5F6] p-3 rounded-lg border border-gray-100 relative overflow-hidden group hover:border-[#8DFF4F] transition-colors"><div className="flex justify-between items-center mb-2 relative z-10"><span className="text-xs font-bold text-gray-500">QUALIDADE VISUAL</span><Sparkles size={16} className="text-[#8DFF4F]" /></div><div className="text-2xl font-display font-bold text-[#000000] relative z-10">Ultra HD</div><div className="absolute bottom-0 left-0 w-full h-1 bg-gray-200"><div className="h-full bg-[#8DFF4F] w-[98%]"></div></div></div>
-                        </div>
-                        <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
-                            <span className="text-xs text-gray-400 font-mono">ID: SK-2026</span>
-                            <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-[#DA00F9]"></div><div className="w-2 h-2 rounded-full bg-[#FFD600]"></div><div className="w-2 h-2 rounded-full bg-[#4A148C]"></div></div>
+
+                        <div className="w-full md:w-2/3 p-8 md:p-10 bg-white">
+                            <div className="mb-6 border-b border-gray-100 pb-4">
+                                <h2 className="font-display font-black text-3xl text-[#000000]">Briefing Tático</h2>
+                                <p className="text-gray-500 text-sm">Focando em: <span className="font-bold text-[#DA00F9]">{serviceType}</span></p>
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Seu Nome</label>
+                                        <input required type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all font-medium" placeholder="Ex: Tony Stark" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Empresa / Marca</label>
+                                        <input type="text" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all font-medium" placeholder="Ex: Stark Ind." value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Área do Projeto</label>
+                                        <div className="relative">
+                                            <select 
+                                                className="w-full p-3 bg-[#F5F5F6] border-2 border-[#000000] rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all appearance-none cursor-pointer font-bold text-[#000000]"
+                                                value={serviceType}
+                                                onChange={(e) => {
+                                                    setServiceType(e.target.value);
+                                                    setFormData(prev => ({...prev, q1:'', q2:'', q3:'', q4:'', q5:''}));
+                                                }}
+                                            >
+                                                {Object.keys(questionsByService).map(s => (
+                                                    <option key={s} value={s}>{s}</option>
+                                                ))}
+                                            </select>
+                                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                                <ChevronLeft size={16} className="-rotate-90 text-[#000000]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">Verba Estimada</label>
+                                        <select className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:border-[#DA00F9] focus:ring-0 outline-none transition-all appearance-none cursor-pointer" value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})}>
+                                            <option>Não tenho certeza</option>
+                                            <option>Até R$ 1.000</option>
+                                            <option>R$ 1.000 - R$ 3.000</option>
+                                            <option>R$ 3.000 - R$ 5.000</option>
+                                            <option>Acima de R$ 5.000</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="bg-[#F5F5F6] p-6 rounded-xl border border-gray-100 space-y-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <Sparkles size={18} className="text-[#DA00F9]" />
+                                        <h4 className="font-bold text-[#000000] text-sm uppercase tracking-wide">Detalhes: {serviceType}</h4>
+                                    </div>
+                                    
+                                    {currentQuestions.map((q, idx) => {
+                                        const key = `q${idx + 1}`;
+                                        return (
+                                            <div key={idx}>
+                                                <label className="block text-xs font-bold text-gray-600 mb-1.5">{idx + 1}. {q}</label>
+                                                <input type="text" required className="w-full p-2.5 bg-white border border-gray-200 rounded focus:border-[#DA00F9] focus:ring-1 focus:ring-[#DA00F9] outline-none transition-all text-sm" placeholder="Sua resposta aqui..." value={formData[key]} onChange={(e) => setFormData({...formData, [key]: e.target.value})} />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <button type="submit" className="w-full bg-[#8DFF4F] text-[#000000] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#7ce644] hover:-translate-y-1 transition-all flex items-center justify-center gap-2 shadow-[0_4px_0px_#000000] active:translate-y-0 active:shadow-none border-2 border-[#000000]">
+                                    Enviar Briefing <Send size={20} />
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    <div className="absolute top-[20%] right-[15%] glass-card p-3 rounded-xl border border-[#DA00F9]/30 shadow-lg animate-float-delay z-30"><Megaphone size={24} className="text-[#DA00F9]" /></div>
-                    <div className="absolute bottom-[30%] left-[20%] glass-card p-3 rounded-xl border border-[#8DFF4F]/30 shadow-lg animate-float z-30" style={{animationDelay: '1.5s'}}><Printer size={24} className="text-[#8DFF4F]" /></div>
-                </div>
+                ) : (
+                    <div className="p-12 text-center flex flex-col items-center justify-center min-h-[500px] bg-tech-grid">
+                        <div className="w-24 h-24 bg-[#8DFF4F] rounded-full flex items-center justify-center mb-6 animate-bounce shadow-[0_0_30px_rgba(141,255,79,0.4)] border-4 border-[#000000]">
+                            <Check size={48} className="text-[#000000]" strokeWidth={4} />
+                        </div>
+                        <h2 className="font-display font-black text-4xl text-[#000000] mb-4">Briefing Recebido!</h2>
+                        <p className="text-gray-600 mb-8 max-w-lg text-lg">
+                            Analisamos suas respostas e já temos uma ideia de como atacar.
+                            <br/><br/>
+                            Clique abaixo para enviar esses dados para nosso WhatsApp e falar com um especialista agora mesmo.
+                        </p>
+                        
+                        <a 
+                            href={getWhatsAppLink()} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="bg-[#25D366] text-white px-8 py-5 rounded-xl font-bold text-xl hover:bg-[#128C7E] transition-all flex items-center gap-3 shadow-[6px_6px_0px_#000000] border-2 border-[#000000] hover:-translate-y-1 hover:shadow-[8px_8px_0px_#000000]"
+                        >
+                            <MessageCircle size={28} />
+                            Finalizar no WhatsApp
+                        </a>
+                        
+                        <button onClick={onClose} className="mt-8 text-gray-400 hover:text-[#DA00F9] text-sm font-bold underline decoration-2 underline-offset-4">
+                            Fechar e voltar ao site
+                        </button>
+                    </div>
+                )}
             </div>
-        </section>
+        </div>
     );
 };
 
@@ -923,4 +897,13 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
         </nav>
     );
 };
+
+// Componente provisório para evitar erro de compilação caso você não crie o arquivo LinksPage.jsx
+const DummyLinksPage = () => (
+    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-10 text-center">
+        <h2 className="text-2xl font-bold mb-4 text-[#FFD600]">⚠️ Atenção!</h2>
+        <p>Para o módulo de links funcionar, crie o arquivo <strong>LinksPage.jsx</strong> e descomente a linha 11 do seu código.</p>
+    </div>
+);
+
 export default App;
