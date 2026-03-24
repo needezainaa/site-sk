@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react'; // Descomente no seu GitHub
 import { 
     Rocket, 
     Printer, 
@@ -34,10 +34,24 @@ import {
     Quote
 } from 'lucide-react';
 
+// =========================================================================
+// IMPORTAÇÃO DO MÓDULO DE LINKS (Para o GitHub)
+// Quando for subir para o GitHub, DESCOMENTE a linha abaixo:
+// import LinksPage from './LinksPage';
+// =========================================================================
+
 const App = () => {
     const [currentView, setCurrentView] = useState('home');
     const [isBriefingOpen, setIsBriefingOpen] = useState(false);
     const [selectedService, setSelectedService] = useState('Social Media');
+
+    // Listener para abrir a página de Links via URL
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash === '#links' || hash === '#quiz' || hash === '#chatbot') {
+            setCurrentView('links');
+        }
+    }, []);
 
     const handleNavigate = (view, sectionId = null) => {
         setCurrentView(view);
@@ -48,6 +62,9 @@ const App = () => {
                 const element = document.getElementById(sectionId);
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
             }, 100);
+        } else if (view === 'home') {
+            // Limpa a URL caso estivesse na página de links
+            window.history.pushState('', document.title, window.location.pathname + window.location.search);
         }
     };
 
@@ -126,6 +143,16 @@ const App = () => {
         }
     `;
 
+    // Renderiza a página de links se a URL estiver ativada
+    if (currentView === 'links') {
+        return (
+            <>
+                <style>{globalStyles}</style>
+                <LinksPage onNavigate={handleNavigate} />
+            </>
+        );
+    }
+
     return (
         <div className="font-sans text-gray-900 antialiased selection:bg-[#DA00F9] selection:text-white min-h-screen flex flex-col">
             <style>{globalStyles}</style>
@@ -149,20 +176,20 @@ const App = () => {
 
             {isBriefingOpen && <BriefingModal onClose={handleCloseBriefing} initialService={selectedService} />}
             
-            {/* Para ativar o Analytics no GitHub/Vercel, remova as chaves e barras para que fique apenas a tag <Analytics /> */}
-            {/* <Analytics /> */}
+            <Analytics />
         </div>
     );
 };
 
 const Services = ({ onOpenBriefing }) => {
+    // Adicionada a chave briefingKey para garantir o link correto com o modal
     const services = [
-        { icon: <Target size={32} />, title: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
-        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações", desc: "Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" },
-        { icon: <MessageCircle size={32} />, title: "Social Media", desc: "Conteúdo que engaja. Transformamos seguidores em fãs leais.", color: "text-[#4A148C]", bgClass: "bg-[#4A148C]/5", borderClass: "border-[#4A148C]/20", hoverColor: "hover:border-[#4A148C]" },
-        { icon: <Monitor size={32} />, title: "Web Design", desc: "Sites rápidos e landing pages que convertem visitantes em clientes.", color: "text-[#FFD600]", bgClass: "bg-[#FFD600]/10", borderClass: "border-[#FFD600]/30", hoverColor: "hover:border-[#FFD600]" },
-        { icon: <Printer size={32} />, title: "Gráfica & Print", desc: "Cartões e banners. A qualidade da sua marca no mundo físico.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
-        { icon: <Palette size={32} />, title: "Identidade Visual", desc: "Logotipos e manuais. Criamos a skin lendária do seu negócio.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" }
+        { icon: <Target size={32} />, title: "Consultoria de Marketing", briefingKey: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
+        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações & Processos", briefingKey: "Consultoria de Processos", desc: "Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" },
+        { icon: <MessageCircle size={32} />, title: "Social Media", briefingKey: "Social Media", desc: "Conteúdo que engaja. Transformamos seguidores em fãs leais.", color: "text-[#4A148C]", bgClass: "bg-[#4A148C]/5", borderClass: "border-[#4A148C]/20", hoverColor: "hover:border-[#4A148C]" },
+        { icon: <Monitor size={32} />, title: "Web Design", briefingKey: "Web Design", desc: "Sites rápidos e landing pages que convertem visitantes em clientes.", color: "text-[#FFD600]", bgClass: "bg-[#FFD600]/10", borderClass: "border-[#FFD600]/30", hoverColor: "hover:border-[#FFD600]" },
+        { icon: <Printer size={32} />, title: "Gráfica & Print", briefingKey: "Gráfica e Impressos", desc: "Cartões e banners. A qualidade da sua marca no mundo físico.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
+        { icon: <Palette size={32} />, title: "Identidade Visual", briefingKey: "Identidade Visual", desc: "Logotipos e manuais. Criamos a skin lendária do seu negócio.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" }
     ];
     return (
         <section id="servicos" className="py-24 relative">
@@ -173,7 +200,7 @@ const Services = ({ onOpenBriefing }) => {
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {services.map((service, index) => (
-                        <div key={index} onClick={() => onOpenBriefing(service.title)} className={`p-8 ${service.bgClass} rounded-2xl border-2 ${service.borderClass} shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${service.hoverColor} group cursor-pointer relative overflow-hidden`}>
+                        <div key={index} onClick={() => onOpenBriefing(service.briefingKey)} className={`p-8 ${service.bgClass} rounded-2xl border-2 ${service.borderClass} shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${service.hoverColor} group cursor-pointer relative overflow-hidden`}>
                             <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-20 ${service.bgClass.replace('/5', '/30').replace('/10', '/40')}`}></div>
                             <div className={`w-14 h-14 bg-white border border-white/50 rounded-xl flex items-center justify-center mb-6 ${service.color} shadow-sm group-hover:scale-110 transition-transform`}>{service.icon}</div>
                             <h3 className="font-display font-bold text-xl text-[#000000] mb-3">{service.title}</h3>
@@ -247,17 +274,21 @@ const Footer = () => {
                     />
                 </div>
                 <p className="text-gray-500 text-sm mb-6">
-                    © 2026 SK Soluções de Marketing. Feito para quem não aceita o básico.
+                    © 2026 SK Soluções de Comunicação. Para quem não aceita o básico.
                 </p>
                 <div className="flex justify-center gap-4 text-gray-400">
                     <a href="https://instagram.com/skmarketingecomunicacao" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#000000] group" title="Siga no Instagram">
                         <Instagram size={18} />
                     </a>
                     
-                    <a href="https://linkedin.com/in/seu_perfil" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#0077b5] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#000000]" title="Conecte-se no LinkedIn">
+                    <a href="https://www.linkedin.com/company/sk-comunique/" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#0077b5] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#000000]" title="Conecte-se no LinkedIn">
                         <Linkedin size={18} />
                     </a>
                 </div>
+                {/* Versículo Adicionado */}
+                <p className="mt-8 text-gray-400 text-[11px] md:text-xs italic max-w-xl mx-auto leading-relaxed font-medium">
+                    "³⁶ Porque dEle e por Ele, e para Ele, são todas as coisas; glória, pois, a Ele eternamente. Amém. - Rm 11:36"
+                </p>
             </div>
         </footer>
     );
@@ -266,24 +297,32 @@ const Footer = () => {
 const Contact = () => {
     const [formState, setFormState] = useState({ name: '', email: '', message: '' });
     const handleSubmit = (e) => { e.preventDefault(); alert(`Mensagem enviada! (Simulação)\nNome: ${formState.name}\nObrigado por contatar a SK!`); setFormState({ name: '', email: '', message: '' }); };
+    
+    // Proporções atualizadas para 45% e 55% para dar mais espaço e e-mail com break-all
     return (
         <section id="contato" className="py-24 bg-tech-grid">
             <div className="container mx-auto px-6 max-w-5xl">
                 <div className="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border-2 border-[#000000]">
-                    <div className="md:w-2/5 bg-[#4A148C] text-white p-10 flex flex-col justify-between relative overflow-hidden">
+                    <div className="md:w-[45%] bg-[#4A148C] text-white p-10 flex flex-col justify-between relative overflow-hidden">
                         <div className="relative z-10">
                             <div className="w-12 h-12 bg-[#FFD600] rounded-xl flex items-center justify-center text-[#4A148C] mb-8 shadow-lg border-2 border-white"><Smile size={28} /></div>
                             <h3 className="font-display font-bold text-3xl mb-4">Vamos desbloquear o próximo nível?</h3>
                             <p className="text-purple-200 mb-8 leading-relaxed">Preencha o formulário e nossa equipe entrará em contato mais rápido que um processador de última geração.</p>
                             <div className="space-y-4">
-                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group"><div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors"><MessageCircle size={18} /></div>skmarketing@gmail.com</div>
-                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group"><div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors"><Layout size={18} /></div>skcomunique.com.br</div>
+                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group">
+                                    <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0"><MessageCircle size={18} /></div>
+                                    <span className="break-all">skmarketingecomunicacao@gmail.com</span>
+                                </div>
+                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group">
+                                    <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0"><Layout size={18} /></div>
+                                    skcomunique.com.br
+                                </div>
                             </div>
                         </div>
                         <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#DA00F9] rounded-full opacity-50 blur-3xl"></div>
                         <div className="absolute top-10 -left-10 w-32 h-32 bg-[#8DFF4F] rounded-full opacity-30 blur-2xl"></div>
                     </div>
-                    <div className="md:w-3/5 p-10">
+                    <div className="md:w-[55%] p-10">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div><label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Seu Nome</label><input type="text" required className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-lg focus:bg-white focus:border-[#4A148C] focus:ring-0 outline-none transition-all font-medium" placeholder="Ex: Tony Stark" value={formState.name} onChange={(e) => setFormState({...formState, name: e.target.value})} /></div>
                             <div><label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">E-mail</label><input type="email" required className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-100 rounded-lg focus:bg-white focus:border-[#DA00F9] focus:ring-0 outline-none transition-all font-medium" placeholder="seu@email.com" value={formState.email} onChange={(e) => setFormState({...formState, email: e.target.value})} /></div>
@@ -787,10 +826,10 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                 <div className="space-y-8 relative">
                     <div className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 rounded-full shadow-sm">
                         <span className="relative flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DFF4F] opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-[#8DFF4F]"></span></span>
-                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Marketing Híbrido & Design</span>
+                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Soluções de Comunicação</span>
                     </div>
                     <h1 className="font-display font-black text-5xl md:text-7xl text-[#000000] leading-[1.05]">SUA MARCA <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4A148C] to-[#DA00F9]">MERECE MAIS</span> <br /><span className="relative inline-block z-10">DO QUE O BÁSICO<svg className="absolute w-[110%] h-4 -bottom-2 -left-2 text-[#FFD600] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="8" fill="none" /></svg></span></h1>
-                    <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6">Comunique o que quiser! Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
+                    <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6">Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
                         <button onClick={() => onOpenBriefing('Social Media')} className="bg-[#4A148C] text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 group shadow-[6px_6px_0px_#FFD600] border-2 border-[#4A148C] hover:scale-105 transition-all duration-300">Quero Ser Visto <Rocket size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"/></button>
                         <button onClick={() => onNavigate('projetos')} className="bg-white text-[#000000] border-2 border-[#000000] px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">Ver Projetos <Zap size={20} className="text-[#FFD600] fill-[#FFD600]" /></button>
@@ -887,5 +926,3 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
         </nav>
     );
 };
-
-export default App;
