@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react';
 import { 
     Rocket, Printer, Megaphone, Target, Cpu, Smile, MessageCircle, 
     Menu, X, ArrowRight, Palette, Zap, Layout, Code, Sparkles, 
@@ -13,7 +13,9 @@ const App = () => {
     const [isBriefingOpen, setIsBriefingOpen] = useState(false);
     const [selectedService, setSelectedService] = useState('Social Media');
 
-    // Listener para abrir a página de Links via URL
+    // =========================================================
+    // 🔗 LÓGICA DE ROTEAMENTO (O que faltava para os Links)
+    // =========================================================
     useEffect(() => {
         const hash = window.location.hash;
         if (hash === '#links' || hash === '#quiz' || hash === '#chatbot') {
@@ -31,6 +33,7 @@ const App = () => {
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
             }, 100);
         } else if (view === 'home') {
+            // Limpa a URL caso estivesse na página de links
             window.history.pushState('', document.title, window.location.pathname + window.location.search);
         }
     };
@@ -111,12 +114,15 @@ const App = () => {
         }
     `;
 
+    // =========================================================
+    // 🔗 RENDERIZADOR DO MÓDULO DE LINKS
+    // Se a URL for #links, ele esconde o site e mostra o módulo
+    // =========================================================
     if (currentView === 'links') {
         return (
             <>
                 <style>{globalStyles}</style>
-                <LinksPage /> 
-                <DummyLinksPage /> 
+                <LinksPage onNavigate={handleNavigate} />
             </>
         );
     }
@@ -143,8 +149,6 @@ const App = () => {
             <Footer />
 
             {isBriefingOpen && <BriefingModal onClose={handleCloseBriefing} initialService={selectedService} />}
-            
-            {/* <Analytics /> */}
         </div>
     );
 };
@@ -160,7 +164,7 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                 <div className="space-y-8 relative">
                     <div className="inline-flex items-center gap-2 bg-white border border-gray-200 px-4 py-1.5 rounded-full shadow-sm">
                         <span className="relative flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DFF4F] opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-[#8DFF4F]"></span></span>
-                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Soluções de comunicação.</span>
+                        <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Soluções de Comunicação</span>
                     </div>
                     <h1 className="font-display font-black text-5xl md:text-7xl text-[#000000] leading-[1.05]">SUA MARCA <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4A148C] to-[#DA00F9]">MERECE MAIS</span> <br /><span className="relative inline-block z-10">DO QUE O BÁSICO<svg className="absolute w-[110%] h-4 -bottom-2 -left-2 text-[#FFD600] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="8" fill="none" /></svg></span></h1>
                     <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6">Comunique o que quiser! Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
@@ -185,7 +189,7 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                             <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-[#DA00F9]"></div><div className="w-2 h-2 rounded-full bg-[#FFD600]"></div><div className="w-2 h-2 rounded-full bg-[#4A148C]"></div></div>
                         </div>
                     </div>
-                    {/* Ícones Flutuantes do Topo */}
+                    {/* MELHORIA: Ícones Flutuantes Adicionados */}
                     <div className="absolute top-[20%] right-[15%] glass-card bg-white p-3 rounded-xl border border-[#DA00F9]/30 shadow-lg animate-float-delay z-30"><Megaphone size={24} className="text-[#DA00F9]" /></div>
                     <div className="absolute bottom-[30%] left-[20%] glass-card bg-white p-3 rounded-xl border border-[#8DFF4F]/30 shadow-lg animate-float z-30" style={{animationDelay: '1.5s'}}><Printer size={24} className="text-[#8DFF4F]" /></div>
                     <div className="absolute bottom-[15%] right-[15%] bg-[#1A1A1A] text-[#FFD600] px-5 py-2.5 rounded-xl font-bold text-sm shadow-xl animate-float z-10 rotate-3 border-2 border-[#FFD600]">#GeekMarketing</div>
@@ -196,9 +200,10 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
 };
 
 const Services = ({ onOpenBriefing }) => {
+    // MELHORIA: briefingKey implementado para abrir a categoria correta no Modal
     const services = [
         { icon: <Target size={32} />, title: "Consultoria de Marketing", briefingKey: "Consultoria de Marketing", desc: "Estratégia afiada. Paramos de chutar e começamos a acertar o alvo.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
-        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações", briefingKey: "Consultoria de Processos", desc: "Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" },
+        { icon: <Cpu size={32} />, title: "Gerenciamento de Automações & Processos", briefingKey: "Consultoria de Processos", desc: "Sua empresa 'rodando liso', sem problemas internos.", color: "text-[#8DFF4F]", bgClass: "bg-[#8DFF4F]/5", borderClass: "border-[#8DFF4F]/20", hoverColor: "hover:border-[#8DFF4F]" },
         { icon: <MessageCircle size={32} />, title: "Social Media", briefingKey: "Social Media", desc: "Conteúdo que engaja. Transformamos seguidores em fãs leais.", color: "text-[#4A148C]", bgClass: "bg-[#4A148C]/5", borderClass: "border-[#4A148C]/20", hoverColor: "hover:border-[#4A148C]" },
         { icon: <Monitor size={32} />, title: "Web Design", briefingKey: "Web Design", desc: "Sites rápidos e landing pages que convertem visitantes em clientes.", color: "text-[#FFD600]", bgClass: "bg-[#FFD600]/10", borderClass: "border-[#FFD600]/30", hoverColor: "hover:border-[#FFD600]" },
         { icon: <Printer size={32} />, title: "Gráfica & Print", briefingKey: "Gráfica e Impressos", desc: "Cartões e banners. A qualidade da sua marca no mundo físico.", color: "text-[#DA00F9]", bgClass: "bg-[#DA00F9]/5", borderClass: "border-[#DA00F9]/20", hoverColor: "hover:border-[#DA00F9]" },
@@ -298,8 +303,9 @@ const Footer = () => {
                         <Linkedin size={18} />
                     </a>
                 </div>
+                {/* MELHORIA: Versículo Adicionado */}
                 <p className="mt-8 text-gray-400 text-[11px] md:text-xs italic max-w-xl mx-auto leading-relaxed font-medium">
-                    "³⁶ Porque dEle e por Ele, e para Ele, são todas as coisas; glória, pois, a Ele eternamente. Amém. - Romanos 11:36"
+                    "³⁶ Porque dele e por ele, e para ele, são todas as coisas; glória, pois, a ele eternamente. Amém. - Romanos 11:36"
                 </p>
             </div>
         </footer>
@@ -324,7 +330,8 @@ const Contact = () => {
                                     <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0">
                                         <MessageCircle size={18} />
                                     </div>
-                                    <span className="break-all">skmarketingecomunicacao@gmail.com</span>
+                                    {/* MELHORIA: E-mail com break-all para não cortar na tela do celular */}
+                                    <span className="break-all md:break-normal">skmarketingecomunicacao@gmail.com</span>
                                 </div>
                                 <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group" onClick={() => window.open('https://instagram.com/skmarketingecomunicacao', '_blank')}>
                                     <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0">
@@ -897,13 +904,5 @@ const Navbar = ({ onNavigate, currentView, onOpenBriefing }) => {
         </nav>
     );
 };
-
-// Componente provisório para evitar erro de compilação caso você não crie o arquivo LinksPage.jsx
-const DummyLinksPage = () => (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-10 text-center">
-        <h2 className="text-2xl font-bold mb-4 text-[#FFD600]">⚠️ Atenção!</h2>
-        <p>Para o módulo de links funcionar, crie o arquivo <strong>LinksPage.jsx</strong> e descomente a linha 11 do seu código.</p>
-    </div>
-);
 
 export default App;
