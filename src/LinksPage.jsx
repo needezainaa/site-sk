@@ -250,4 +250,3 @@ const LinksPage = ({ onNavigate }) => {
 };
 
 export default LinksPage;
-```
