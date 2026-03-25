@@ -13,14 +13,14 @@ const LinksMenu = ({ onInternalNavigate }) => (
                 <a href="https://wa.me/5511945438152?text=Ol%C3%A1!%20Vim%20pelo%20QR%20Code%20e%20quero%20conversar" target="_blank" rel="noopener noreferrer" className="w-full bg-[#00e676] text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#00c965] transition-all hover:scale-105 shadow-[4px_4px_0px_#1a1a1a] border-2 border-[#1a1a1a]">
                     <MessageCircle size={20} />1. Fale direto no WhatsApp
                 </a>
-                <button onClick={() => onInternalNavigate('quiz')} className="w-full bg-[#ff0080] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#e60073] transition-all hover:scale-105 shadow-[4px_4px_0px_#1a1a1a] border-2 border-[#1a1a1a]">
-                    <Sparkles size={20} className="text-[#FFD600]" />2. Diagnóstico da Empresa
+                <button onClick={() => onInternalNavigate('quiz')} className="w-full bg-white text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-gray-100 transition-all hover:scale-105 shadow-[4px_4px_0px_#ff0080] border-2 border-[#1a1a1a]">
+                    <Sparkles size={20} className="text-[#ff0080]" />2. Diagnóstico da Empresa
                 </button>
-                <button onClick={() => onInternalNavigate('chatbot')} className="w-full bg-[#4A148C] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#340b69] transition-all hover:scale-105 shadow-[4px_4px_0px_#FFD600] border-2 border-[#1a1a1a]">
-                    <Bot size={20} className="text-[#FFD600]" />3. Teste o nosso Chatbot &lt;3
+                <button onClick={() => onInternalNavigate('chatbot')} className="w-full bg-[#FFD600] text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#ffea00] transition-all hover:scale-105 shadow-[4px_4px_0px_#4A148C] border-2 border-[#1a1a1a]">
+                    <Bot size={20} className="text-[#4A148C]" />3. Teste o nosso Chatbot &lt;3
                 </button>
-                <button onClick={() => { window.location.hash = ''; window.location.reload(); }} className="w-full bg-transparent text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all border-2 border-white/20 mt-4">
-                    <Layout size={20} />4. Acesse o Site Completo
+                <button onClick={() => { window.location.hash = ''; window.location.reload(); }} className="w-full bg-[#4A148C] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#5e19b5] transition-all hover:scale-105 shadow-[4px_4px_0px_#ffffff] border-2 border-[#ffffff] mt-4">
+                    <Layout size={20} className="text-white" />4. Acesse o Site Completo
                 </button>
             </div>
         </div>
