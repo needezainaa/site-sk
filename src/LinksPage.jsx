@@ -6,13 +6,13 @@ const LinksMenu = ({ onInternalNavigate, onNavigate }) => (
         <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-[#ff0080] rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-pulse"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-[#00e676] rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
         <div className="relative z-10 w-full max-w-sm flex flex-col items-center animate-fade-in">
-            <img src="https://i.imgur.com/i3aRzWc.png" alt="SK Logo" className="h-16 mb-6 object-contain" />
+            <img src="[https://i.imgur.com/i3aRzWc.png](https://i.imgur.com/i3aRzWc.png)" alt="SK Logo" className="h-16 mb-6 object-contain" />
             <h1 className="text-white font-display font-black text-2xl text-center mb-2">Bem-vindo(a) à SK</h1>
             <p className="text-gray-400 text-center text-sm mb-8">Escolha a melhor opção para sua empresa hoje:</p>
             <div className="w-full space-y-4">
                 
                 <a 
-                    href="https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação?" 
+                    href="[https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação](https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação)?" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="w-full bg-[#00e676] text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#00c965] transition-all hover:scale-105 shadow-[4px_4px_0px_#1a1a1a] border-2 border-[#1a1a1a]"
@@ -54,19 +54,18 @@ const ChatbotView = ({ onBack }) => {
         return words.length <= 3 ? words[0].charAt(0).toUpperCase() + words[0].toLowerCase().slice(1) : ""; 
     };
 
+    // Categorização restrita APENAS aos 5 serviços foco da SK
     const categorizeServices = (text1, text2) => {
         const combined = (text1 + " " + text2).toLowerCase();
         const found = new Set();
         
-        if (combined.match(/bot|chatbot|atendimento|robô|zap|whatsapp|demora|responder|braço|automático|agilizar/)) found.add("Chatbots Personalizados");
-        if (combined.match(/site|página|landing|app|aplicativo|sistema|loja|e-commerce|ecommerce|virtual|vender online/)) found.add("Desenvolvimento de Sites ou E-commerce");
-        if (combined.match(/instagram|post|rede social|social media|conteúdo|tiktok|engajamento|seguidor/)) found.add("Gestão de Social Media");
-        if (combined.match(/venda|vender|marketing|estratégia|crescer|cliente|direção/)) found.add("Consultoria de Marketing");
-        if (combined.match(/processo|organizar|planilha|gestão|empresa|equipe|intern/)) found.add("Consultoria de Automação & Processos");
-        if (combined.match(/banner|cartão|material|gráfico|arte|impresso|impressão/)) found.add("Demandas Gráficas");
-        if (combined.match(/logo|identidade|visual|marca|rebranding|design/)) found.add("Identidade Visual");
+        if (combined.match(/bot|chatbot|atendimento|robô|zap|whatsapp|demora|responder|automático|automação|processo/)) found.add("Automações e Chatbots");
+        if (combined.match(/site|página|landing|app|aplicativo|sistema|loja|e-commerce|ecommerce|virtual/)) found.add("Web e App");
+        if (combined.match(/instagram|post|rede social|social media|conteúdo|tiktok|engajamento|seguidor/)) found.add("Social Media");
+        if (combined.match(/venda|vender|marketing|estratégia|crescer|cliente/)) found.add("Consultoria de Marketing");
+        if (combined.match(/banner|cartão|material|gráfico|arte|impresso|impressão|panfleto/)) found.add("Gráfica e Impressos");
         
-        return found.size === 0 ? ["Consultoria de Marketing e Design"] : Array.from(found);
+        return found.size === 0 ? ["Consultoria de Marketing"] : Array.from(found);
     };
 
     const handleSend = (e) => {
@@ -141,55 +140,55 @@ const ChatbotView = ({ onBack }) => {
 const QuizView = ({ onBack }) => {
     const [step, setStep] = useState(0);
     const [history, setHistory] = useState([]); 
+    
+    // State restrito apenas aos 5 serviços oferecidos
     const [scores, setScores] = useState({ 
         "Consultoria de Marketing": 0, 
-        "Consultoria de Automação & Processos": 0, 
-        "Chatbots Personalizados": 0, 
-        "Desenvolvimento de Sites / Aplicativos": 0, 
-        "Gestão de Social Media": 0, 
-        "Identidade Visual": 0, 
-        "Demandas Gráficas": 0 
+        "Social Media": 0, 
+        "Automações e Chatbots": 0, 
+        "Web e App": 0, 
+        "Gráfica e Impressos": 0 
     });
 
     const questions = [
         { 
             title: "1. Pensando no momento atual da sua empresa, qual o maior desafio?", 
             options: [
-                { text: "Não damos conta do atendimento, o WhatsApp é uma bagunça.", services: ["Chatbots Personalizados", "Consultoria de Automação & Processos"] }, 
-                { text: "Falta clareza e uma estratégia forte de vendas e posicionamento.", services: ["Consultoria de Marketing"] }, 
-                { text: "Precisamos de um site, loja virtual ou landing page.", services: ["Desenvolvimento de Sites / Aplicativos"] }
+                { text: "O atendimento no WhatsApp é uma bagunça e perdemos vendas.", services: ["Automações e Chatbots"] }, 
+                { text: "Faltam estratégias claras para atrair e fechar clientes.", services: ["Consultoria de Marketing"] }, 
+                { text: "Precisamos de um site, loja virtual ou aplicativo próprio.", services: ["Web e App"] }
             ] 
         },
         { 
             title: "2. Como está a imagem e presença digital da sua marca?", 
             options: [
-                { text: "Não tenho tempo para criar posts e as redes estão paradas.", services: ["Gestão de Social Media"] }, 
-                { text: "A marca parece amadora perto dos concorrentes (preciso de logo/artes).", services: ["Identidade Visual"] }, 
-                { text: "Preciso de materiais impressos e apoio visual físico (cartões, banners).", services: ["Demandas Gráficas"] }
+                { text: "Não tenho tempo para postar e as redes estão paradas.", services: ["Social Media"] }, 
+                { text: "Preciso de materiais impressos de alta qualidade (cartões, banners).", services: ["Gráfica e Impressos"] }, 
+                { text: "O visual não converte, preciso alinhar o marketing como um todo.", services: ["Consultoria de Marketing"] }
             ] 
         },
         { 
-            title: "3. Sobre processos internos e ferramentas comerciais:", 
+            title: "3. Sobre as ferramentas comerciais e operacionais:", 
             options: [
-                { text: "A equipe perde muito tempo com tarefas manuais e repetitivas.", services: ["Consultoria de Automação & Processos"] }, 
-                { text: "Precisamos de materiais comerciais e apresentações para a equipe de vendas.", services: ["Demandas Gráficas", "Consultoria de Marketing"] }, 
-                { text: "Quero um sistema/site para centralizar os serviços ao cliente.", services: ["Desenvolvimento de Sites / Aplicativos"] }
+                { text: "A equipe perde tempo com tarefas repetitivas e manuais.", services: ["Automações e Chatbots"] }, 
+                { text: "Precisamos de materiais físicos ou apresentações para a equipe.", services: ["Gráfica e Impressos"] }, 
+                { text: "Quero um sistema ou portal web para centralizar serviços.", services: ["Web e App"] }
             ] 
         },
         { 
-            title: "4. O que traria mais impacto para o seu negócio nos próximos 30 dias?", 
+            title: "4. O que traria mais impacto para o seu negócio rapidamente?", 
             options: [
-                { text: "Um robô qualificando leads e respondendo clientes 24h.", services: ["Chatbots Personalizados"] }, 
-                { text: "Terceirizar a criação de conteúdo para focar apenas na gestão.", services: ["Gestão de Social Media"] }, 
-                { text: "Uma identidade visual nova, profissional e de alto padrão.", services: ["Identidade Visual"] }
+                { text: "Um robô qualificando leads e respondendo clientes 24h.", services: ["Automações e Chatbots"] }, 
+                { text: "Terceirizar a criação de conteúdo das redes sociais.", services: ["Social Media"] }, 
+                { text: "Uma landing page ou e-commerce focado em conversão.", services: ["Web e App"] }
             ] 
         },
         { 
             title: "5. Se tivesse que escolher UMA prioridade para a SK resolver hoje:", 
             options: [
-                { text: "Melhorar o relacionamento e engajamento com o público (Redes Sociais).", services: ["Gestão de Social Media", "Consultoria de Marketing"] }, 
-                { text: "Elevar o nível estético e estrutural da marca (Identidade, Site, Gráfica).", services: ["Identidade Visual", "Desenvolvimento de Sites / Aplicativos", "Demandas Gráficas"] }, 
-                { text: "Reestruturar a 'casa' com automações (Atendimento automático e Processos).", services: ["Consultoria de Automação & Processos", "Chatbots Personalizados"] }
+                { text: "Melhorar o relacionamento e conteúdo nas redes.", services: ["Social Media"] }, 
+                { text: "Criar materiais físicos e impressos para a marca.", services: ["Gráfica e Impressos"] }, 
+                { text: "Reestruturar o marketing e automatizar o atendimento.", services: ["Consultoria de Marketing", "Automações e Chatbots"] }
             ] 
         }
     ];
@@ -206,7 +205,7 @@ const QuizView = ({ onBack }) => {
         if (step > 1) {
             const lastImpacted = history[history.length - 1];
             const newScores = { ...scores };
-            lastImpacted.forEach(service => { if(newScores[service] !== undefined) newScores[service] -= 1; });
+            if (lastImpacted) lastImpacted.forEach(service => { if(newScores[service] !== undefined) newScores[service] -= 1; });
             
             setScores(newScores);
             setHistory(history.slice(0, -1)); 
@@ -214,14 +213,13 @@ const QuizView = ({ onBack }) => {
         } else if (step === 1) {
             setStep(0);
             setHistory([]);
+            // Zera o placar com as categorias exatas
             setScores({ 
                 "Consultoria de Marketing": 0, 
-                "Consultoria de Automação & Processos": 0, 
-                "Chatbots Personalizados": 0, 
-                "Desenvolvimento de Sites / Aplicativos": 0, 
-                "Gestão de Social Media": 0, 
-                "Identidade Visual": 0, 
-                "Demandas Gráficas": 0 
+                "Social Media": 0, 
+                "Automações e Chatbots": 0, 
+                "Web e App": 0, 
+                "Gráfica e Impressos": 0 
             });
         }
     };
@@ -266,10 +264,10 @@ const QuizView = ({ onBack }) => {
                                         <button 
                                             key={`q${step}-opt${idx}`} 
                                             onClick={(e) => {
-                                                e.currentTarget.blur();
+                                                e.currentTarget.blur(); // Remove o foco do botão para evitar o "fantasma" visual
                                                 handleAnswer(opt.services);
                                             }} 
-                                            className="w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-[#ff0080] hover:bg-[#f8fafc] transition-all group focus:outline-none"
+                                            className="w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-[#ff0080] hover:bg-[#f8fafc] transition-all group focus:outline-none focus:ring-0"
                                         >
                                             <span className="font-medium text-gray-700 group-hover:text-[#1a1a1a]">{opt.text}</span>
                                         </button>
