@@ -10,6 +10,7 @@ const LinksMenu = ({ onInternalNavigate, onNavigate }) => (
             <h1 className="text-white font-display font-black text-2xl text-center mb-2">Bem-vindo(a) à SK</h1>
             <p className="text-gray-400 text-center text-sm mb-8">Escolha a melhor opção para sua empresa hoje:</p>
             <div className="w-full space-y-4">
+                
                 <a 
                     href="https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação?" 
                     target="_blank" 
@@ -30,6 +31,7 @@ const LinksMenu = ({ onInternalNavigate, onNavigate }) => (
                 <button onClick={() => onNavigate('home')} className="w-full bg-[#4A148C] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#5e19b5] transition-all hover:scale-105 shadow-[4px_4px_0px_#ffffff] border-2 border-[#ffffff] mt-4">
                     <Layout size={20} className="text-white" />4. Acesse o Site Completo
                 </button>
+
             </div>
         </div>
     </div>
@@ -55,14 +57,16 @@ const ChatbotView = ({ onBack }) => {
     const categorizeServices = (text1, text2) => {
         const combined = (text1 + " " + text2).toLowerCase();
         const found = new Set();
+        
         if (combined.match(/bot|chatbot|atendimento|robô|zap|whatsapp|demora|responder|braço|automático|agilizar/)) found.add("Chatbots Personalizados");
-        if (combined.match(/site|página|landing|app|aplicativo|sistema/)) found.add("Desenvolvimento de Sites ou App");
+        if (combined.match(/site|página|landing|app|aplicativo|sistema|loja|e-commerce|ecommerce|virtual|vender online/)) found.add("Desenvolvimento de Sites ou E-commerce");
         if (combined.match(/instagram|post|rede social|social media|conteúdo|tiktok|engajamento|seguidor/)) found.add("Gestão de Social Media");
-        if (combined.match(/venda|vender|marketing|estratégia|crescer|cliente|direção|agora em diante/)) found.add("Consultoria de Marketing");
+        if (combined.match(/venda|vender|marketing|estratégia|crescer|cliente|direção/)) found.add("Consultoria de Marketing");
         if (combined.match(/processo|organizar|planilha|gestão|empresa|equipe|intern/)) found.add("Consultoria de Automação & Processos");
-        if (combined.match(/evento|publicidade|tráfego|anúncio|campanha|anunciar/)) found.add("Publicidade e Eventos");
-        if (combined.match(/banner|cartão|material|gráfico|arte|logo|visual/)) found.add("Demandas Gráficas");
-        return found.size === 0 ? ["Consultoria Geral"] : Array.from(found);
+        if (combined.match(/banner|cartão|material|gráfico|arte|impresso|impressão/)) found.add("Demandas Gráficas");
+        if (combined.match(/logo|identidade|visual|marca|rebranding|design/)) found.add("Identidade Visual");
+        
+        return found.size === 0 ? ["Consultoria de Marketing e Design"] : Array.from(found);
     };
 
     const handleSend = (e) => {
@@ -136,15 +140,58 @@ const ChatbotView = ({ onBack }) => {
 
 const QuizView = ({ onBack }) => {
     const [step, setStep] = useState(0);
-    const [history, setHistory] = useState([]);
-    const [scores, setScores] = useState({ "Consultoria de Marketing": 0, "Consultoria de Automação & Processos": 0, "Chatbots Personalizados": 0, "Desenvolvimento de Sites / Aplicativos": 0, "Gestão de Social Media e Criação de Conteúdo": 0, "Publicidade e Eventos": 0, "Demandas Gráficas": 0 });
+    const [history, setHistory] = useState([]); 
+    const [scores, setScores] = useState({ 
+        "Consultoria de Marketing": 0, 
+        "Consultoria de Automação & Processos": 0, 
+        "Chatbots Personalizados": 0, 
+        "Desenvolvimento de Sites / Aplicativos": 0, 
+        "Gestão de Social Media": 0, 
+        "Identidade Visual": 0, 
+        "Demandas Gráficas": 0 
+    });
 
     const questions = [
-        { title: "1. Pensando na estrutura de vendas da sua empresa, qual o maior desafio?", options: [{ text: "Não damos conta do atendimento, o WhatsApp é uma bagunça.", services: ["Chatbots Personalizados", "Consultoria de Automação & Processos"] }, { text: "Falta estratégia clara para atrair e fechar clientes.", services: ["Consultoria de Marketing"] }, { text: "Precisamos de um site, landing page ou sistema próprio.", services: ["Desenvolvimento de Sites / Aplicativos"] }] },
-        { title: "2. Como está a sua presença no Instagram e nas redes sociais?", options: [{ text: "Não tenho tempo para criar posts e as vendas estão estacionadas.", services: ["Gestão de Social Media e Criação de Conteúdo", "Consultoria de Marketing"] }, { text: "Eu até posto, mas sinto que não gera engajamento ou retorno.", services: ["Gestão de Social Media e Criação de Conteúdo", "Publicidade e Eventos"] }, { text: "Faço o básico, mas quero impulsionar com anúncios fortes.", services: ["Publicidade e Eventos"] }] },
-        { title: "3. Como você organiza os processos e a equipe internamente?", options: [{ text: "É tudo na cabeça, no papel ou em planilhas soltas e confusas.", services: ["Consultoria de Automação & Processos"] }, { text: "Usamos ferramentas, mas elas não conversam entre si.", services: ["Consultoria de Automação & Processos", "Desenvolvimento de Sites / Aplicativos"] }, { text: "A equipe perde muito tempo com tarefas repetitivas.", services: ["Chatbots Personalizados", "Consultoria de Automação & Processos"] }] },
-        { title: "4. O que faria você faturar mais nos próximos 30 dias?", options: [{ text: "Ter um robô atendendo, vendendo e qualificando leads 24h.", services: ["Chatbots Personalizados"] }, { text: "Ter uma estratégia de tráfego pago rodando com força (Anúncios).", services: ["Publicidade e Eventos"] }, { text: "Terceirizar a criação de conteúdo para eu focar só na operação.", services: ["Gestão de Social Media e Criação de Conteúdo"] }] },
-        { title: "5. Se você tivesse que escolher apenas UMA prioridade para a SK resolver hoje:", options: [{ text: "Arrumar a 'casa' (Atendimento automatizado e processos).", services: ["Consultoria de Automação & Processos", "Chatbots Personalizados"] }, { text: "Aumentar o volume de interessados chegando (Tráfego, Social Media).", services: ["Publicidade e Eventos", "Gestão de Social Media e Criação de Conteúdo"] }, { text: "Reestruturar o modelo de negócio e as vendas (Estratégia completa).", services: ["Consultoria de Marketing"] }, { text: "Criar materiais (Site, Aplicativo ou Material Gráfico para Eventos).", services: ["Desenvolvimento de Sites / Aplicativos", "Demandas Gráficas"] }] }
+        { 
+            title: "1. Pensando no momento atual da sua empresa, qual o maior desafio?", 
+            options: [
+                { text: "Não damos conta do atendimento, o WhatsApp é uma bagunça.", services: ["Chatbots Personalizados", "Consultoria de Automação & Processos"] }, 
+                { text: "Falta clareza e uma estratégia forte de vendas e posicionamento.", services: ["Consultoria de Marketing"] }, 
+                { text: "Precisamos de um site, loja virtual ou landing page.", services: ["Desenvolvimento de Sites / Aplicativos"] }
+            ] 
+        },
+        { 
+            title: "2. Como está a imagem e presença digital da sua marca?", 
+            options: [
+                { text: "Não tenho tempo para criar posts e as redes estão paradas.", services: ["Gestão de Social Media"] }, 
+                { text: "A marca parece amadora perto dos concorrentes (preciso de logo/artes).", services: ["Identidade Visual"] }, 
+                { text: "Preciso de materiais impressos e apoio visual físico (cartões, banners).", services: ["Demandas Gráficas"] }
+            ] 
+        },
+        { 
+            title: "3. Sobre processos internos e ferramentas comerciais:", 
+            options: [
+                { text: "A equipe perde muito tempo com tarefas manuais e repetitivas.", services: ["Consultoria de Automação & Processos"] }, 
+                { text: "Precisamos de materiais comerciais e apresentações para a equipe de vendas.", services: ["Demandas Gráficas", "Consultoria de Marketing"] }, 
+                { text: "Quero um sistema/site para centralizar os serviços ao cliente.", services: ["Desenvolvimento de Sites / Aplicativos"] }
+            ] 
+        },
+        { 
+            title: "4. O que traria mais impacto para o seu negócio nos próximos 30 dias?", 
+            options: [
+                { text: "Um robô qualificando leads e respondendo clientes 24h.", services: ["Chatbots Personalizados"] }, 
+                { text: "Terceirizar a criação de conteúdo para focar apenas na gestão.", services: ["Gestão de Social Media"] }, 
+                { text: "Uma identidade visual nova, profissional e de alto padrão.", services: ["Identidade Visual"] }
+            ] 
+        },
+        { 
+            title: "5. Se tivesse que escolher UMA prioridade para a SK resolver hoje:", 
+            options: [
+                { text: "Melhorar o relacionamento e engajamento com o público (Redes Sociais).", services: ["Gestão de Social Media", "Consultoria de Marketing"] }, 
+                { text: "Elevar o nível estético e estrutural da marca (Identidade, Site, Gráfica).", services: ["Identidade Visual", "Desenvolvimento de Sites / Aplicativos", "Demandas Gráficas"] }, 
+                { text: "Reestruturar a 'casa' com automações (Atendimento automático e Processos).", services: ["Consultoria de Automação & Processos", "Chatbots Personalizados"] }
+            ] 
+        }
     ];
 
     const handleAnswer = (servicesImpacted) => {
@@ -159,14 +206,23 @@ const QuizView = ({ onBack }) => {
         if (step > 1) {
             const lastImpacted = history[history.length - 1];
             const newScores = { ...scores };
-            if (lastImpacted) lastImpacted.forEach(service => { if(newScores[service] !== undefined) newScores[service] -= 1; });
+            lastImpacted.forEach(service => { if(newScores[service] !== undefined) newScores[service] -= 1; });
+            
             setScores(newScores);
-            setHistory(history.slice(0, -1));
+            setHistory(history.slice(0, -1)); 
             setStep(step - 1);
         } else if (step === 1) {
             setStep(0);
             setHistory([]);
-            setScores({ "Consultoria de Marketing": 0, "Consultoria de Automação & Processos": 0, "Chatbots Personalizados": 0, "Desenvolvimento de Sites / Aplicativos": 0, "Gestão de Social Media e Criação de Conteúdo": 0, "Publicidade e Eventos": 0, "Demandas Gráficas": 0 });
+            setScores({ 
+                "Consultoria de Marketing": 0, 
+                "Consultoria de Automação & Processos": 0, 
+                "Chatbots Personalizados": 0, 
+                "Desenvolvimento de Sites / Aplicativos": 0, 
+                "Gestão de Social Media": 0, 
+                "Identidade Visual": 0, 
+                "Demandas Gráficas": 0 
+            });
         }
     };
 
