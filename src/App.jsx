@@ -3,13 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { 
     Rocket, Printer, Megaphone, Target, Cpu, Smile, MessageCircle, 
     Menu, X, ArrowRight, Palette, Zap, Layout, Code, Sparkles, 
-    TrendingUp, ChevronLeft, ChevronRight, Check, Instagram, Linkedin, Send, Monitor, Quote,
-    Bot, User // <-- Adicionados os ícones que faltavam para o LinksPage
+    TrendingUp, ChevronLeft, ChevronRight, Check, Instagram, Linkedin, Send, Monitor, Quote
 } from 'lucide-react';
 
-// =========================================================
-// 🚀 COMPONENTE PRINCIPAL (APP)
-// =========================================================
+import LinksPage from './LinksPage';
 
 const App = () => {
     const [currentView, setCurrentView] = useState('home');
@@ -17,26 +14,24 @@ const App = () => {
     const [selectedService, setSelectedService] = useState('Social Media');
 
     // =========================================================
-    // 🔗 LÓGICA DE ROTEAMENTO (O que faltava para os Links)
+    // 🔗 LÓGICA DE ROTEAMENTO (Ouvindo o botão de Voltar)
     // =========================================================
     useEffect(() => {
         const handleRouteChange = () => {
             const hash = window.location.hash;
             if (hash === '#links' || hash === '#quiz' || hash === '#chatbot') {
                 setCurrentView('links');
-            } else if (!hash || hash === '') {
+            } else {
                 setCurrentView('home');
             }
         };
 
-        // Verifica a URL quando a página carrega pela primeira vez
-        handleRouteChange();
+        handleRouteChange(); // Verifica no carregamento
 
-        // Ouve quando o usuário clica no "Voltar" ou "Avançar" do navegador
+        // Ouve o evento de voltar do navegador
         window.addEventListener('popstate', handleRouteChange);
         window.addEventListener('hashchange', handleRouteChange);
 
-        // Limpa os ouvintes quando o componente for desmontado
         return () => {
             window.removeEventListener('popstate', handleRouteChange);
             window.removeEventListener('hashchange', handleRouteChange);
@@ -47,13 +42,14 @@ const App = () => {
         setCurrentView(view);
         window.scrollTo(0, 0);
 
-        if (view === 'home' && sectionId) {
-            setTimeout(() => {
-                const element = document.getElementById(sectionId);
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        } else if (view === 'home') {
+        if (view === 'home') {
             window.history.pushState('', document.title, window.location.pathname + window.location.search);
+            if (sectionId) {
+                setTimeout(() => {
+                    const element = document.getElementById(sectionId);
+                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
         }
     };
 
@@ -133,6 +129,10 @@ const App = () => {
         }
     `;
 
+    // =========================================================
+    // 🔗 RENDERIZADOR DO MÓDULO DE LINKS
+    // Se a URL for #links, ele esconde o site e mostra o módulo
+    // =========================================================
     if (currentView === 'links') {
         return (
             <>
@@ -182,7 +182,7 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                         <span className="text-gray-600 text-xs font-bold tracking-wide uppercase">Soluções de Comunicação</span>
                     </div>
                     <h1 className="font-display font-black text-5xl md:text-7xl text-[#000000] leading-[1.05]">SUA MARCA <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4A148C] to-[#DA00F9]">MERECE MAIS</span> <br /><span className="relative inline-block z-10">DO QUE O BÁSICO<svg className="absolute w-[110%] h-4 -bottom-2 -left-2 text-[#FFD600] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="8" fill="none" /></svg></span></h1>
-                    <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6">Comunique o que quiser! Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
+                    <p className="text-lg text-gray-600 max-w-lg leading-relaxed border-l-4 border-[#DA00F9] pl-6"> Transformamos sua empresa em uma referência visual e estratégica, desde o operacional à apresentação Social. Faça parte da mudança: Comunique!</p>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
                         <button onClick={() => onOpenBriefing('Social Media')} className="bg-[#4A148C] text-white px-8 py-4 rounded-lg font-bold flex items-center justify-center gap-2 group shadow-[6px_6px_0px_#FFD600] border-2 border-[#4A148C] hover:scale-105 transition-all duration-300">Quero Ser Visto <Rocket size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"/></button>
                         <button onClick={() => onNavigate('projetos')} className="bg-white text-[#000000] border-2 border-[#000000] px-8 py-4 rounded-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">Ver Projetos <Zap size={20} className="text-[#FFD600] fill-[#FFD600]" /></button>
@@ -204,6 +204,7 @@ const Hero = ({ onNavigate, onOpenBriefing }) => {
                             <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-[#DA00F9]"></div><div className="w-2 h-2 rounded-full bg-[#FFD600]"></div><div className="w-2 h-2 rounded-full bg-[#4A148C]"></div></div>
                         </div>
                     </div>
+                    {/* BANNER RESTAURADO */}
                     <div className="absolute top-[20%] right-[15%] glass-card bg-white p-3 rounded-xl border border-[#DA00F9]/30 shadow-lg animate-float-delay z-30"><Megaphone size={24} className="text-[#DA00F9]" /></div>
                     <div className="absolute bottom-[30%] left-[20%] glass-card bg-white p-3 rounded-xl border border-[#8DFF4F]/30 shadow-lg animate-float z-30" style={{animationDelay: '1.5s'}}><Printer size={24} className="text-[#8DFF4F]" /></div>
                     <div className="absolute bottom-[15%] right-[15%] bg-[#1A1A1A] text-[#FFD600] px-5 py-2.5 rounded-xl font-bold text-sm shadow-xl animate-float z-10 rotate-3 border-2 border-[#FFD600]">#GeekMarketing</div>
@@ -308,7 +309,7 @@ const Footer = () => {
                     © 2026 SK Soluções de Comunicação. Para quem não aceita o básico.
                 </p>
                 <div className="flex justify-center gap-4 text-gray-400">
-                    <a href="https://instagram.com/skmarketingecomunicacao" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#000000] group" title="Siga no Instagram">
+                    <a href="https://instagram.com/skcomunique" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-[#E1306C] hover:text-white transition-colors cursor-pointer border border-transparent hover:border-[#000000] group" title="Siga no Instagram">
                         <Instagram size={18} />
                     </a>
                     
@@ -344,7 +345,7 @@ const Contact = () => {
                                     </div>
                                     <span className="break-all md:break-normal">skmarketingecomunicacao@gmail.com</span>
                                 </div>
-                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group" onClick={() => window.open('https://instagram.com/skmarketingecomunicacao', '_blank')}>
+                                <div className="flex items-center gap-4 text-sm font-bold hover:text-[#FFD600] transition-colors cursor-pointer group" onClick={() => window.open('https://instagram.com/skcomunique', '_blank')}>
                                     <div className="p-2 bg-white/10 rounded-lg group-hover:bg-[#FFD600] group-hover:text-[#4A148C] transition-colors shrink-0">
                                         <Instagram size={18} />
                                     </div>
