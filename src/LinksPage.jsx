@@ -10,7 +10,6 @@ const LinksMenu = ({ onInternalNavigate, onNavigate }) => (
             <h1 className="text-white font-display font-black text-2xl text-center mb-2">Bem-vindo(a) à SK</h1>
             <p className="text-gray-400 text-center text-sm mb-8">Escolha a melhor opção para sua empresa hoje:</p>
             <div className="w-full space-y-4">
-                
                 <a 
                     href="https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação?" 
                     target="_blank" 
@@ -31,7 +30,6 @@ const LinksMenu = ({ onInternalNavigate, onNavigate }) => (
                 <button onClick={() => onNavigate('home')} className="w-full bg-[#4A148C] text-white p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#5e19b5] transition-all hover:scale-105 shadow-[4px_4px_0px_#ffffff] border-2 border-[#ffffff] mt-4">
                     <Layout size={20} className="text-white" />4. Acesse o Site Completo
                 </button>
-
             </div>
         </div>
     </div>
@@ -209,7 +207,14 @@ const QuizView = ({ onBack }) => {
                                 <h3 className="font-display font-bold text-xl text-[#1a1a1a] mb-6">{questions[step - 1].title}</h3>
                                 <div className="space-y-3">
                                     {questions[step - 1].options.map((opt, idx) => (
-                                        <button key={idx} onClick={() => handleAnswer(opt.services)} className="w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-[#ff0080] hover:bg-[#f8fafc] transition-all group">
+                                        <button 
+                                            key={`q${step}-opt${idx}`} 
+                                            onClick={(e) => {
+                                                e.currentTarget.blur();
+                                                handleAnswer(opt.services);
+                                            }} 
+                                            className="w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-[#ff0080] hover:bg-[#f8fafc] transition-all group focus:outline-none"
+                                        >
                                             <span className="font-medium text-gray-700 group-hover:text-[#1a1a1a]">{opt.text}</span>
                                         </button>
                                     ))}
