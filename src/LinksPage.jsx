@@ -6,7 +6,7 @@ const LinksMenu = ({ onInternalNavigate, onNavigate }) => (
         <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-[#ff0080] rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-pulse"></div>
         <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-[#00e676] rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
         <div className="relative z-10 w-full max-w-sm flex flex-col items-center animate-fade-in">
-            <img src="[https://i.imgur.com/i3aRzWc.png](https://i.imgur.com/i3aRzWc.png)" alt="SK Logo" className="h-16 mb-6 object-contain" />
+            <img src="https://i.imgur.com/KANdqTl.png" alt="SK Logo" className="h-16 mb-6 object-contain" />
             <h1 className="text-white font-display font-black text-2xl text-center mb-2">Bem-vindo(a) à SK</h1>
             <p className="text-gray-400 text-center text-sm mb-8">Escolha a melhor opção para sua empresa hoje:</p>
             <div className="w-full space-y-4">
