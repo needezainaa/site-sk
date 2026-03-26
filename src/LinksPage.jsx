@@ -12,7 +12,7 @@ const LinksMenu = ({ onInternalNavigate, onNavigate }) => (
             <div className="w-full space-y-4">
                 
                 <a 
-                    href="[https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação](https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação)?" 
+                    href="https://wa.me/5511945438152?text=Olá,%20time%20SK!%20Vim%20pelo%20QR%20Code%20e%20gostaria%20de%20elevar%20o%20nível%20da%20minha%20marca.%20Podemos%20conversar%20sobre%20como%20transformar%20minha%20comunicação?" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="w-full bg-[#00e676] text-[#1a1a1a] p-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#00c965] transition-all hover:scale-105 shadow-[4px_4px_0px_#1a1a1a] border-2 border-[#1a1a1a]"
